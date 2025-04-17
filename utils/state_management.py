@@ -1,6 +1,22 @@
 # Utility functions for managing Streamlit session state
 import streamlit as st
 
+def init_session_state():
+    """Initialize the session state with default values if they don't exist."""
+    defaults = {
+        'current_step': 0,
+        'product_name': '',
+        'quantity': 1,
+        'selected_supplier_id': None,
+        'supplier_response': None,
+        'selected_worker_id': None,
+        'order_complete': False
+    }
+    
+    for key, value in defaults.items():
+        if key not in st.session_state:
+            st.session_state[key] = value
+
 def initialize_state():
     """Initializes the session state variables if they don't exist."""
     if 'current_step' not in st.session_state:
