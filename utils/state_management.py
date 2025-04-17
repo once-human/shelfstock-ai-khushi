@@ -10,7 +10,9 @@ def get_default_state():
         'selected_supplier_id': None,
         'supplier_response': None,
         'selected_worker_id': None,
-        'order_complete': False
+        'order_complete': False,
+        'initial_message_content': None,
+        'confirmation_message_content': None
     }
 
 def init_session_state():

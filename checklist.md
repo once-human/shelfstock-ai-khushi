@@ -81,9 +81,9 @@ This checklist tracks the progress of building the Streamlit application based o
 ## Phase 6: AI Integration (Optional)
 
 - [ ] Integrate `ai_toolkit/` components if needed.
-- [ ] Implement actual message/email generation in Step 2 (Initial Message) using `openai_api_helper.py`.
-- [ ] Implement actual confirmation sending in Step 5 (Send Confirmation).
-- [ ] Add error handling for API calls.
+- [x] Implement actual message/email generation in Step 2 (Initial Message) using `openai_api_helper.py`.
+- [x] Implement actual confirmation sending in Step 5 (Send Confirmation).
+- [x] Add error handling for API calls.
 
 ## Phase 7: Testing & Finalization
 
