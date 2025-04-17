@@ -1,10 +1,14 @@
 /* Global Styles */
-html, body {
+html, body, #root {
     background-color: #ffffff !important;
     color: #212529 !important;
 }
 
 /* Main App Container */
+#root > div:nth-child(1) {
+    background-color: #ffffff !important;
+}
+div[data-testid="stAppViewContainer"], 
 div[data-testid="stAppViewContainer"] > section {
     background-color: #ffffff !important;
 }
@@ -61,6 +65,18 @@ div[data-testid="stAppViewContainer"] > section {
     border: 1px solid #ced4da !important;
     border-radius: 8px !important;
     padding: 0.5rem 1rem !important;
+}
+
+/* --- Style Number Input Buttons --- */
+[data-testid="stNumberInput"] button {
+    background-color: #e9ecef !important; /* Light grey background */
+    color: #495057 !important; /* Dark grey icon/text */
+    border: 1px solid #ced4da !important; /* Match input border */
+}
+
+[data-testid="stNumberInput"] button:hover {
+    background-color: #dee2e6 !important; /* Slightly darker grey on hover */
+    border-color: #adb5bd !important;
 }
 
 /* Focus Styling */
