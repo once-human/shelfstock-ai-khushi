@@ -8,11 +8,13 @@ def get_default_state():
         'product_name': '',
         'quantity': 1,
         'selected_supplier_id': None,
-        'supplier_response': None,
+        'supplier_response': None, # Can be 'Accepted', 'Rejected', or None
         'selected_worker_id': None,
         'order_complete': False,
         'initial_message_content': None,
-        'confirmation_message_content': None
+        'confirmation_message_content': None,
+        'initial_message_sent': False, # Track if initial email was sent
+        'confirmation_message_sent': False # Track if confirmation email was sent
     }
 
 def init_session_state():

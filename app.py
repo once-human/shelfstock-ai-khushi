@@ -8,7 +8,18 @@ from steps.step_4_assign_worker import render_assign_worker
 from steps.step_5_send_confirmation import render_send_confirmation
 from steps.step_6_complete import render_complete
 from utils.state_management import init_session_state
+from utils.db_init import init_database # Import DB initializer
 from pathlib import Path
+import configs # Import configs
+
+# Initialize Database (Run once if DB doesn't exist)
+# In a real deployment, this might be handled differently (e.g., separate script)
+if not Path("data/app_data.db").exists():
+    try:
+        init_database()
+    except Exception as e:
+        st.error(f"Database initialization failed: {e}")
+        st.stop() # Stop the app if DB can't be initialized
 
 # Function to load CSS
 def load_css(file_name):
@@ -30,16 +41,18 @@ init_session_state()
 # Load custom CSS
 load_css("style.css")
 
-# Define step names and icons (TODO: Move to configs.py)
-STEPS_CONFIG = {
+# Define step names and icons 
+# Try loading from configs.py, fallback to default
+DEFAULT_STEPS_CONFIG = {
     0: {"name": "Product Details", "icon": "📦"},
     1: {"name": "Select Supplier", "icon": "👥"},
-    2: {"name": "Initial Message", "icon": "📝"},
+    2: {"name": "Send Initial Message", "icon": "📝"}, # Updated name
     3: {"name": "Await Response", "icon": "🕒"},
-    4: {"name": "Assign Worker", "icon": "🧑\u200d🔧"}, # Using unicode for person mechanic
+    4: {"name": "Assign Worker", "icon": "🧑\u200d🔧"},
     5: {"name": "Send Confirmation", "icon": "📨"},
-    6: {"name": "Complete", "icon": "✔️"}
+    6: {"name": "Order Complete", "icon": "✔️"} # Updated name
 }
+STEPS_CONFIG = getattr(configs, 'STEPS_CONFIG', DEFAULT_STEPS_CONFIG)
 
 # Render sidebar step tracker
 with st.sidebar:

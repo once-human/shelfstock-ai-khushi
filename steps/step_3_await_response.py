@@ -1,43 +1,50 @@
 import streamlit as st
 import time
-from utils.data_handler import load_suppliers
-from utils.state_management import reset_state
+from utils.data_handler import get_supplier_by_id # Use DB function
+from utils.state_management import reset_state 
 
 def render_await_response():
-    """Render the await response step where we wait for supplier's response."""
-    st.header("Step 3: Await Response")
+    """Render the await response step - waits for manual user confirmation."""
+    st.header("Step 3: Await Supplier Response")
     
-    # Get supplier details
-    suppliers = load_suppliers()
-    supplier = next((s for s in suppliers if s['id'] == st.session_state.get('selected_supplier_id')), None)
+    supplier_id = st.session_state.get('selected_supplier_id')
+    supplier = get_supplier_by_id(supplier_id)
     
     if not supplier:
-        st.error("No supplier selected. Please go back and select a supplier.")
+        st.error("Supplier details not found. Please restart the process.")
+        if st.button("Restart Order"):
+            reset_state()
+            st.rerun()
         return
     
-    # If we don't have a response yet, show waiting state
-    if 'supplier_response' not in st.session_state or st.session_state['supplier_response'] is None:
-        st.info(f"Waiting for response from {supplier['name']}...")
+    # Check if a response has been manually entered
+    if st.session_state.get('supplier_response') is None:
+        st.info(f"📧 Initial inquiry email sent to {supplier['name']} ({supplier.get('contact_email', 'No email on file')}).")
+        st.markdown("**Waiting for supplier response.** Please check your email or other communication channels.")
+        st.markdown("Once you receive the response, please update the status below:")
         
-        # Add a simulate response button (in real app, this would be handled by backend)
-        if st.button("Simulate Response"):
-            with st.spinner("Getting response..."):
-                time.sleep(2)
-                # For demo, we'll always accept. In real app, this could be random or based on actual response
+        # Add buttons for manual confirmation
+        col1, col2 = st.columns(2)
+        with col1:
+            if st.button("Mark Order as ACCEPTED", type="primary"):
                 st.session_state['supplier_response'] = 'Accepted'
                 st.rerun()
-    
-    # If we have a response, show it
-    else:
-        response = st.session_state['supplier_response']
-        if response == 'Accepted':
-            st.success(f"{supplier['name']} has accepted your order!")
-            if st.button("Proceed to Worker Assignment", type="primary"):
-                st.session_state['current_step'] = 4
+        with col2:
+            if st.button("Mark Order as REJECTED"):
+                st.session_state['supplier_response'] = 'Rejected'
                 st.rerun()
-        else:
-            st.error(f"{supplier['name']} has declined your order.")
-            if st.button("Start Over"):
-                # Reset relevant state
-                reset_state()
-                st.rerun() 
+    
+    # If response is marked as Accepted
+    elif st.session_state['supplier_response'] == 'Accepted':
+        st.success(f"✅ Order marked as **Accepted** by {supplier['name']}.")
+        if st.button("Next: Assign Worker", type="primary"):
+            st.session_state['current_step'] = 4
+            st.rerun()
+            
+    # If response is marked as Rejected
+    elif st.session_state['supplier_response'] == 'Rejected':
+        st.error(f"❌ Order marked as **Rejected** by {supplier['name']}.")
+        st.warning("Cannot proceed with this order.")
+        if st.button("Start New Order"):
+            reset_state()
+            st.rerun() 
