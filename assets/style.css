@@ -1,0 +1,19 @@
+/* Basic Streamlit App Styling */
+
+/* Example: Style the sidebar */
+[data-testid="stSidebar"] {
+    background-color: #f0f2f6;
+}
+
+/* Example: Style primary buttons */
+.stButton>button {
+    border-radius: 20px;
+    border: 1px solid #ff4b4b;
+    color: #ff4b4b;
+}
+
+.stButton>button:hover {
+    border: 1px solid #ff4b4b;
+    color: white;
+    background-color: #ff4b4b;
+} 

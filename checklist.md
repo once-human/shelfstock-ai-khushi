@@ -73,8 +73,8 @@ This checklist tracks the progress of building the Streamlit application based o
 
 ## Phase 5: Styling & Refinements (Optional)
 
-- [ ] Add custom CSS rules to `assets/style.css` for improved UI/UX.
-- [ ] Load custom CSS in `app.py`.
+- [x] Add custom CSS rules to `assets/style.css` for improved UI/UX.
+- [x] Load custom CSS in `app.py`.
 - [ ] Implement reusable UI components in `utils/ui_components.py` (e.g., styled cards for suppliers/workers).
 - [ ] Refine layout, button placement, and visual feedback.
 
@@ -88,9 +88,9 @@ This checklist tracks the progress of building the Streamlit application based o
 ## Phase 7: Testing & Finalization
 
 - [ ] Test the end-to-end workflow thoroughly.
-- [ ] Debug any issues with state management or step transitions.
-- [ ] Add input validation where necessary.
-- [ ] Clean up code and add comments.
+- [x] Debug any issues with state management or step transitions.
+- [x] Add input validation where necessary.
+- [x] Clean up code and add comments.
 
 ## Phase 8: Deployment (Optional)
 

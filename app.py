@@ -8,6 +8,14 @@ from steps.step_4_assign_worker import render_assign_worker
 from steps.step_5_send_confirmation import render_send_confirmation
 from steps.step_6_complete import render_complete
 from utils.state_management import init_session_state
+from pathlib import Path
+
+# Function to load CSS
+def load_css(file_name):
+    css_path = Path("assets") / file_name
+    if css_path.is_file():
+        with open(css_path) as f:
+            st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
 # Set page config
 st.set_page_config(
@@ -18,6 +26,9 @@ st.set_page_config(
 
 # Initialize session state
 init_session_state()
+
+# Load custom CSS
+load_css("style.css")
 
 # Define step names (TODO: Move to configs.py)
 STEPS = {
