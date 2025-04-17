@@ -1,0 +1,7 @@
+[theme]
+base = "light"
+primaryColor = "#0d6efd" # Match our blue button color
+backgroundColor = "#ffffff" # Explicitly set background
+secondaryBackgroundColor = "#f8f9fa" # Explicitly set sidebar/secondary background
+textColor = "#212529" # Explicitly set default text color
+font = "sans serif" 

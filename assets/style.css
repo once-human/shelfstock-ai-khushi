@@ -1,8 +1,4 @@
-/* Global Styles */
-html, body, #root {
-    background-color: #ffffff !important;
-    color: #212529 !important;
-}
+/* Global Styles - Let config.toml handle base */
 
 /* Main App Container */
 #root > div:nth-child(1) {
@@ -15,7 +11,7 @@ div[data-testid="stAppViewContainer"] > section {
 
 /* Sidebar Styling */
 [data-testid="stSidebar"] > div:first-child {
-    background-color: #f8f9fa !important;
+    /* config.toml sets secondaryBackgroundColor */
     padding-top: 2rem;
 }
 
@@ -25,23 +21,23 @@ div[data-testid="stAppViewContainer"] > section {
     border-radius: 5px;
     margin-bottom: 0.5rem;
     font-size: 1rem;
-    color: #6c757d !important;
-    background-color: transparent !important;
+    color: #6c757d; /* Default inactive step color */
+    background-color: transparent;
 }
 
 [data-testid="stSidebar"] .stMarkdown p strong {
-    color: #0d6efd !important;
+    color: #0d6efd; /* Active step color (matches primaryColor) */
     font-weight: 600;
 }
 
 [data-testid="stSidebar"] .stMarkdown p:hover {
-    background-color: #e9ecef !important;
+    background-color: #e9ecef;
 }
 
 /* Main Content Area Styling */
 .main .block-container {
-    background-color: #ffffff !important;
-    padding: 2rem !important;
+    /* config.toml sets backgroundColor */
+    padding: 2rem;
 }
 
 /* Input Field & Label Styling */
@@ -49,25 +45,25 @@ div[data-testid="stAppViewContainer"] > section {
 [data-testid="stNumberInput"] label,
 [data-testid="stTextArea"] label,
 [data-testid="stSelectbox"] label {
-    visibility: visible !important;
-    display: block !important;
-    font-weight: 600 !important;
-    color: #495057 !important;
-    margin-bottom: 0.5rem !important;
+    visibility: visible !important; /* Keep visibility override */
+    display: block !important; /* Keep display override */
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 0.5rem;
 }
 
 [data-testid="stTextInput"] input,
 [data-testid="stNumberInput"] input,
 [data-testid="stTextArea"] textarea,
 [data-testid="stSelectbox"] [data-baseweb="select"] > div {
-    background-color: #ffffff !important;
-    color: #212529 !important;
-    border: 1px solid #ced4da !important;
-    border-radius: 8px !important;
-    padding: 0.5rem 1rem !important;
+    background-color: #ffffff; /* Ensure inputs are white */
+    color: #212529; /* Ensure text is dark */
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
 }
 
-/* --- Style Number Input Buttons --- */
+/* Style Number Input Buttons */
 [data-testid="stNumberInput"] button {
     background-color: #e9ecef !important; /* Light grey background */
     color: #495057 !important; /* Dark grey icon/text */
@@ -75,11 +71,11 @@ div[data-testid="stAppViewContainer"] > section {
 }
 
 [data-testid="stNumberInput"] button:hover {
-    background-color: #dee2e6 !important; /* Slightly darker grey on hover */
+    background-color: #dee2e6 !important; /* Slightly darker grey */
     border-color: #adb5bd !important;
 }
 
-/* Focus Styling */
+/* Focus Styling (Keep important for visual feedback) */
 [data-testid="stTextInput"] input:focus,
 [data-testid="stNumberInput"] input:focus,
 [data-testid="stTextArea"] textarea:focus,
@@ -89,10 +85,10 @@ div[data-testid="stAppViewContainer"] > section {
     box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25) !important;
 }
 
-/* Header Styling */
+/* Header Styling (Let config.toml handle base color) */
 h1, h2, h3 {
-    color: #212529 !important;
-    font-weight: 600 !important;
+    /* color: #212529; */ /* Let theme handle */
+    font-weight: 600;
 }
 
 /* Button Styling */
@@ -100,14 +96,14 @@ h1, h2, h3 {
     border-radius: 8px !important;
     padding: 0.5rem 1.5rem !important;
     font-weight: 600 !important;
-    border: 1px solid #0d6efd !important;
-    background-color: #0d6efd !important;
+    border: 1px solid #0d6efd !important; /* Use primaryColor */
+    background-color: #0d6efd !important; /* Use primaryColor */
     color: white !important;
     transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .stButton>button:hover {
-    background-color: #0b5ed7 !important;
+    background-color: #0b5ed7 !important; /* Darker shade */
     border-color: #0a58ca !important;
     color: white !important;
 }
