@@ -76,7 +76,7 @@ This checklist tracks the progress of building the Streamlit application based o
 - [x] Add custom CSS rules to `assets/style.css` for improved UI/UX.
 - [x] Load custom CSS in `app.py`.
 - [ ] Implement reusable UI components in `utils/ui_components.py` (e.g., styled cards for suppliers/workers).
-- [ ] Refine layout, button placement, and visual feedback.
+- [x] Refine layout, button placement, and visual feedback.
 
 ## Phase 6: AI Integration (Optional)
 

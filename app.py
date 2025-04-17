@@ -30,29 +30,34 @@ init_session_state()
 # Load custom CSS
 load_css("style.css")
 
-# Define step names (TODO: Move to configs.py)
-STEPS = {
-    0: "Product Details",
-    1: "Select Supplier",
-    2: "Initial Message",
-    3: "Await Response",
-    4: "Assign Worker",
-    5: "Send Confirmation",
-    6: "Complete"
+# Define step names and icons (TODO: Move to configs.py)
+STEPS_CONFIG = {
+    0: {"name": "Product Details", "icon": "📦"},
+    1: {"name": "Select Supplier", "icon": "👥"},
+    2: {"name": "Initial Message", "icon": "📝"},
+    3: {"name": "Await Response", "icon": "🕒"},
+    4: {"name": "Assign Worker", "icon": "🧑\u200d🔧"}, # Using unicode for person mechanic
+    5: {"name": "Send Confirmation", "icon": "📨"},
+    6: {"name": "Complete", "icon": "✔️"}
 }
 
 # Render sidebar step tracker
 with st.sidebar:
-    st.title("Progress")
+    st.title("Order Steps") # Changed title slightly
     current_step = st.session_state.get('current_step', 0)
     
-    for step_num, step_name in STEPS.items():
+    for step_num, config in STEPS_CONFIG.items():
+        step_name = config["name"]
+        icon = config["icon"]
         if step_num == current_step:
-            st.markdown(f"**➡️ {step_name}**")
+            # Use Markdown bold for active step, CSS targets this
+            st.markdown(f"**{icon} {step_name}**", unsafe_allow_html=True)
         elif step_num < current_step:
-            st.markdown(f"✅ {step_name}")
+            # Completed step - you could use a different icon or style if desired
+            st.markdown(f"✅ {step_name}", unsafe_allow_html=True) # Using checkmark for completed
         else:
-            st.markdown(f"⭕ {step_name}")
+            # Inactive step
+            st.markdown(f"{icon} {step_name}", unsafe_allow_html=True)
 
 # Render main content area based on current step
 if current_step == 0:

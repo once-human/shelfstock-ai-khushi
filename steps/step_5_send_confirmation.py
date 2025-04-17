@@ -72,7 +72,7 @@ def render_send_confirmation():
         st.text_area("Confirmation", value=st.session_state['confirmation_message_content'], height=300, key="confirmation_message_display")
         
         # Button to proceed (simulating sending)
-        if st.button("Confirm and Complete Order (Simulate Send)"):
+        if st.button("Confirm and Complete Order (Simulate Send)", type="primary"):
             # In a real app, you would add email sending logic here
             st.success("Confirmation confirmed. Order complete!")
             time.sleep(1) # Short delay for user feedback

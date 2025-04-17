@@ -1,6 +1,7 @@
 import streamlit as st
 import time
 from utils.data_handler import load_suppliers
+from utils.state_management import reset_state
 
 def render_await_response():
     """Render the await response step where we wait for supplier's response."""
@@ -31,12 +32,12 @@ def render_await_response():
         response = st.session_state['supplier_response']
         if response == 'Accepted':
             st.success(f"{supplier['name']} has accepted your order!")
-            if st.button("Proceed to Worker Assignment"):
+            if st.button("Proceed to Worker Assignment", type="primary"):
                 st.session_state['current_step'] = 4
+                st.rerun()
         else:
             st.error(f"{supplier['name']} has declined your order.")
             if st.button("Start Over"):
                 # Reset relevant state
-                st.session_state['supplier_response'] = None
-                st.session_state['selected_supplier_id'] = None
-                st.session_state['current_step'] = 1 
+                reset_state()
+                st.rerun() 

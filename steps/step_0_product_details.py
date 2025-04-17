@@ -22,7 +22,7 @@ def render_product_details():
     )
     
     # Next button
-    if st.button("Next Step"):
+    if st.button("Next Step", type="primary"):
         if product_name.strip():  # Basic validation
             st.session_state['current_step'] = 1
         else:

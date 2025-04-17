@@ -72,7 +72,7 @@ def render_initial_message():
         st.text_area("Message", value=st.session_state['initial_message_content'], height=250, key="initial_message_display")
         
         # Button to proceed (simulating sending)
-        if st.button("Confirm and Proceed (Simulate Send)"):
+        if st.button("Confirm and Proceed (Simulate Send)", type="primary"):
             # In a real app, you would add email sending logic here
             st.success("Message confirmed. Proceeding to await response.")
             time.sleep(1) # Short delay for user feedback

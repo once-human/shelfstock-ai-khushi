@@ -1,19 +1,94 @@
-/* Basic Streamlit App Styling */
-
-/* Example: Style the sidebar */
-[data-testid="stSidebar"] {
-    background-color: #f0f2f6;
+/* Global Styles */
+body {
+    background-color: #ffffff; /* White background for the main area */
 }
 
-/* Example: Style primary buttons */
+/* Sidebar Styling */
+[data-testid="stSidebar"] {
+    background-color: #f8f9fa; /* Light grey background for sidebar */
+    padding-top: 2rem; /* Add some padding at the top */
+}
+
+/* Sidebar Step Indicator Styling */
+[data-testid="stSidebar"] .stMarkdown p {
+    padding: 0.5rem 1rem; /* Add padding around step text */
+    border-radius: 5px; /* Slightly rounded corners */
+    margin-bottom: 0.5rem; /* Space between steps */
+    font-size: 1rem; /* Adjust font size if needed */
+    color: #6c757d; /* Default inactive step color (grey) */
+}
+
+[data-testid="stSidebar"] .stMarkdown p strong {
+    color: #0d6efd; /* Active step color (blue) */
+    font-weight: 600; /* Make active step bold */
+}
+
+/* Optional: Add a subtle hover effect for sidebar items */
+[data-testid="stSidebar"] .stMarkdown p:hover {
+    background-color: #e9ecef; /* Slightly darker grey on hover */
+}
+
+/* Main Content Area Styling */
+[data-testid="stVerticalBlock"] {
+    background-color: #ffffff; /* Ensure main area is white */
+    padding: 2rem; /* Add padding to the main content area */
+}
+
+/* Button Styling */
 .stButton>button {
-    border-radius: 20px;
-    border: 1px solid #ff4b4b;
-    color: #ff4b4b;
+    border-radius: 8px !important; /* Rounded corners */
+    padding: 0.5rem 1.5rem !important; /* Adjust padding */
+    font-weight: 600 !important;
+    border: 1px solid #0d6efd !important; /* Blue border */
+    background-color: #0d6efd !important; /* Blue background */
+    color: white !important; /* White text */
+    transition: background-color 0.2s ease, border-color 0.2s ease; /* Smooth transition */
 }
 
 .stButton>button:hover {
-    border: 1px solid #ff4b4b;
-    color: white;
-    background-color: #ff4b4b;
+    background-color: #0b5ed7 !important; /* Darker blue on hover */
+    border-color: #0a58ca !important;
+    color: white !important;
+}
+
+.stButton>button:active {
+    background-color: #0a58ca !important; /* Even darker blue when clicked */
+    border-color: #0a58ca !important;
+}
+
+/* Styling for secondary/non-primary buttons (like Simulate Response) */
+/* You might need to add specific keys or classes to buttons if you want them styled differently */
+/* Example: If a button has key="secondary_button", you could target it */
+/* .stButton [data-testid="stButton-secondary_button"]>button { ... } */
+
+/* Input Field Styling */
+[data-testid="stTextInput"] label,
+[data-testid="stNumberInput"] label,
+[data-testid="stTextArea"] label,
+[data-testid="stSelectbox"] label {
+    font-weight: 600; /* Bolder labels */
+    margin-bottom: 0.5rem; /* Space below label */
+    display: block;
+}
+
+[data-testid="stTextInput"] input,
+[data-testid="stNumberInput"] input,
+[data-testid="stTextArea"] textarea,
+[data-testid="stSelectbox"] [data-baseweb="select"] > div {
+    border-radius: 8px !important; /* Rounded corners */
+    border: 1px solid #ced4da !important; /* Standard Bootstrap grey border */
+    padding: 0.5rem 1rem !important; /* Adjust padding */
+}
+
+[data-testid="stTextInput"] input:focus,
+[data-testid="stNumberInput"] input:focus,
+[data-testid="stTextArea"] textarea:focus,
+[data-testid="stSelectbox"] [data-baseweb="select"] > div:focus-within {
+    border-color: #86b7fe !important; /* Blue border on focus */
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25) !important; /* Blue shadow on focus */
+}
+
+/* Header Styling */
+h1, h2, h3 {
+    color: #212529; /* Darker text color for headers */
 } 

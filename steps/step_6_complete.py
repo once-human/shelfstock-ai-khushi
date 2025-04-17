@@ -50,6 +50,6 @@ def render_complete():
         st.write("Response: Accepted")
     
     # Add button to start new order
-    if st.button("Start New Order"):
+    if st.button("Start New Order", type="primary"):
         reset_state()
         st.rerun() 

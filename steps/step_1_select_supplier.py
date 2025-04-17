@@ -21,7 +21,7 @@ def render_select_supplier():
             format_func=lambda x: x[1]
         )
         
-        if st.button("Next Step"):
+        if st.button("Next Step", type="primary"):
             st.session_state['selected_supplier_id'] = selected_supplier[0]
             st.session_state['current_step'] = 2
             

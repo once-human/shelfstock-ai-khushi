@@ -36,7 +36,7 @@ def render_assign_worker():
         st.write(f"Role: {worker['role']}")
         
         # Assign worker button
-        if st.button("Assign Worker"):
+        if st.button("Assign Worker", type="primary"):
             st.session_state['selected_worker_id'] = selected_worker_id
             st.success(f"Successfully assigned {worker['name']} to this order!")
             st.session_state['current_step'] = 5 
