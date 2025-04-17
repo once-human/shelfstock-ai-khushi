@@ -24,6 +24,7 @@ def render_select_supplier():
         if st.button("Next Step", type="primary"):
             st.session_state['selected_supplier_id'] = selected_supplier[0]
             st.session_state['current_step'] = 2
+            st.rerun()
             
     except Exception as e:
         st.error(f"Error loading suppliers: {str(e)}") 

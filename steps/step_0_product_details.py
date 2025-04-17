@@ -25,5 +25,6 @@ def render_product_details():
     if st.button("Next Step", type="primary"):
         if product_name.strip():  # Basic validation
             st.session_state['current_step'] = 1
+            st.rerun() # Force rerun immediately after state update
         else:
             st.error("Please enter a product name before proceeding.") 
