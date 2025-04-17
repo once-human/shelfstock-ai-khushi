@@ -1,0 +1,25 @@
+{
+    "workers": [
+        {
+            "id": "wrk_001",
+            "name": "John Smith",
+            "role": "Sales Representative",
+            "availability": true,
+            "current_tasks": 2
+        },
+        {
+            "id": "wrk_002",
+            "name": "Sarah Johnson",
+            "role": "Account Manager",
+            "availability": true,
+            "current_tasks": 1
+        },
+        {
+            "id": "wrk_003",
+            "name": "Michael Chen",
+            "role": "Sales Representative",
+            "availability": false,
+            "current_tasks": 5
+        }
+    ]
+} 

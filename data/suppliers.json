@@ -1,0 +1,25 @@
+{
+    "suppliers": [
+        {
+            "id": "sup_001",
+            "name": "Global Supply Co.",
+            "rating": 4.5,
+            "specialties": ["Electronics", "Components"],
+            "contact_email": "contact@globalsupply.com"
+        },
+        {
+            "id": "sup_002",
+            "name": "Quality Parts Ltd.",
+            "rating": 4.8,
+            "specialties": ["Mechanical Parts", "Tools"],
+            "contact_email": "info@qualityparts.com"
+        },
+        {
+            "id": "sup_003",
+            "name": "Tech Solutions Inc.",
+            "rating": 4.2,
+            "specialties": ["Software", "Hardware"],
+            "contact_email": "support@techsolutions.com"
+        }
+    ]
+} 

@@ -4,19 +4,19 @@ This checklist tracks the progress of building the Streamlit application based o
 
 ## Phase 1: Project Setup & Foundation
 
-- [ ] Create base directories: `steps/`, `utils/`, `data/`, `assets/` (and `ai_toolkit/` if moving existing files).
-- [ ] Create empty Python files with `__init__.py` in `steps/`, `utils/`, and `ai_toolkit/`.
-- [ ] Create placeholder Python files: `app.py`, `configs.py`, `utils/state_management.py`, `utils/data_handler.py`, `utils/ui_components.py` (optional).
-- [ ] Create placeholder step files: `steps/step_0_product_details.py` to `steps/step_6_complete.py`.
-- [ ] Create placeholder data files: `data/suppliers.json`, `data/workers.json`.
+- [x] Create base directories: `steps/`, `utils/`, `data/`, `assets/` (and `ai_toolkit/` if moving existing files).
+- [x] Create empty Python files with `__init__.py` in `steps/`, `utils/`, and `ai_toolkit/`.
+- [x] Create placeholder Python files: `app.py`, `configs.py`, `utils/state_management.py`, `utils/data_handler.py`, `utils/ui_components.py` (optional).
+- [x] Create placeholder step files: `steps/step_0_product_details.py` to `steps/step_6_complete.py`.
+- [x] Create placeholder data files: `data/suppliers.json`, `data/workers.json`.
 - [ ] Create placeholder asset files: `assets/style.css` (optional).
-- [ ] Update `requirements.txt` with necessary packages (at least `streamlit`).
-- [ ] Configure `configs.py` with initial settings (e.g., step names list).
-- [ ] Basic `app.py` setup: Import Streamlit, set page config.
+- [x] Update `requirements.txt` with necessary packages (at least `streamlit`).
+- [x] Configure `configs.py` with initial settings (e.g., step names list).
+- [x] Basic `app.py` setup: Import Streamlit, set page config.
 
 ## Phase 2: Core Layout & State Management
 
-- [ ] Implement state initialization in `utils/state_management.py` (function to set default `st.session_state` values).
+- [x] Implement state initialization in `utils/state_management.py` (function to set default `st.session_state` values).
 - [ ] Call state initialization in `app.py`.
 - [ ] Implement the sidebar step tracker in `app.py` (using `st.sidebar`).
     - [ ] Display all step names.
@@ -26,8 +26,8 @@ This checklist tracks the progress of building the Streamlit application based o
 
 ## Phase 3: Data Handling
 
-- [ ] Populate `data/suppliers.json` with sample supplier data (name, rating, id, etc.).
-- [ ] Populate `data/workers.json` with sample worker data (name, availability, id, etc.).
+- [x] Populate `data/suppliers.json` with sample supplier data (name, rating, id, etc.).
+- [x] Populate `data/workers.json` with sample worker data (name, availability, id, etc.).
 - [ ] Implement data loading functions in `utils/data_handler.py` (e.g., `load_suppliers()`, `load_workers()`).
 
 ## Phase 4: Step Implementation (UI & Logic)
