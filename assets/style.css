@@ -1,58 +1,103 @@
 /* Global Styles */
-body {
-    background-color: #ffffff; /* White background for the main area */
+html, body {
+    background-color: #ffffff !important;
+    color: #212529 !important;
+}
+
+/* Main App Container */
+div[data-testid="stAppViewContainer"] > section {
+    background-color: #ffffff !important;
 }
 
 /* Sidebar Styling */
-[data-testid="stSidebar"] {
-    background-color: #f8f9fa; /* Light grey background for sidebar */
-    padding-top: 2rem; /* Add some padding at the top */
+[data-testid="stSidebar"] > div:first-child {
+    background-color: #f8f9fa !important;
+    padding-top: 2rem;
 }
 
 /* Sidebar Step Indicator Styling */
 [data-testid="stSidebar"] .stMarkdown p {
-    padding: 0.5rem 1rem; /* Add padding around step text */
-    border-radius: 5px; /* Slightly rounded corners */
-    margin-bottom: 0.5rem; /* Space between steps */
-    font-size: 1rem; /* Adjust font size if needed */
-    color: #6c757d; /* Default inactive step color (grey) */
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: #6c757d !important;
+    background-color: transparent !important;
 }
 
 [data-testid="stSidebar"] .stMarkdown p strong {
-    color: #0d6efd; /* Active step color (blue) */
-    font-weight: 600; /* Make active step bold */
+    color: #0d6efd !important;
+    font-weight: 600;
 }
 
-/* Optional: Add a subtle hover effect for sidebar items */
 [data-testid="stSidebar"] .stMarkdown p:hover {
-    background-color: #e9ecef; /* Slightly darker grey on hover */
+    background-color: #e9ecef !important;
 }
 
 /* Main Content Area Styling */
-[data-testid="stVerticalBlock"] {
-    background-color: #ffffff; /* Ensure main area is white */
-    padding: 2rem; /* Add padding to the main content area */
+.main .block-container {
+    background-color: #ffffff !important;
+    padding: 2rem !important;
+}
+
+/* Input Field & Label Styling */
+[data-testid="stTextInput"] label,
+[data-testid="stNumberInput"] label,
+[data-testid="stTextArea"] label,
+[data-testid="stSelectbox"] label {
+    visibility: visible !important;
+    display: block !important;
+    font-weight: 600 !important;
+    color: #495057 !important;
+    margin-bottom: 0.5rem !important;
+}
+
+[data-testid="stTextInput"] input,
+[data-testid="stNumberInput"] input,
+[data-testid="stTextArea"] textarea,
+[data-testid="stSelectbox"] [data-baseweb="select"] > div {
+    background-color: #ffffff !important;
+    color: #212529 !important;
+    border: 1px solid #ced4da !important;
+    border-radius: 8px !important;
+    padding: 0.5rem 1rem !important;
+}
+
+/* Focus Styling */
+[data-testid="stTextInput"] input:focus,
+[data-testid="stNumberInput"] input:focus,
+[data-testid="stTextArea"] textarea:focus,
+[data-testid="stSelectbox"] [data-baseweb="select"] > div:focus-within {
+    border-color: #86b7fe !important;
+    background-color: #ffffff !important;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25) !important;
+}
+
+/* Header Styling */
+h1, h2, h3 {
+    color: #212529 !important;
+    font-weight: 600 !important;
 }
 
 /* Button Styling */
 .stButton>button {
-    border-radius: 8px !important; /* Rounded corners */
-    padding: 0.5rem 1.5rem !important; /* Adjust padding */
+    border-radius: 8px !important;
+    padding: 0.5rem 1.5rem !important;
     font-weight: 600 !important;
-    border: 1px solid #0d6efd !important; /* Blue border */
-    background-color: #0d6efd !important; /* Blue background */
-    color: white !important; /* White text */
-    transition: background-color 0.2s ease, border-color 0.2s ease; /* Smooth transition */
+    border: 1px solid #0d6efd !important;
+    background-color: #0d6efd !important;
+    color: white !important;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .stButton>button:hover {
-    background-color: #0b5ed7 !important; /* Darker blue on hover */
+    background-color: #0b5ed7 !important;
     border-color: #0a58ca !important;
     color: white !important;
 }
 
 .stButton>button:active {
-    background-color: #0a58ca !important; /* Even darker blue when clicked */
+    background-color: #0a58ca !important;
     border-color: #0a58ca !important;
 }
 
