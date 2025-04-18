@@ -4,4 +4,7 @@ primaryColor = "#0d6efd" # Match our blue button color
 backgroundColor = "#ffffff" # Explicitly set background
 secondaryBackgroundColor = "#f8f9fa" # Explicitly set sidebar/secondary background
 textColor = "#212529" # Explicitly set default text color
-font = "sans serif" 
+font = "sans serif" # Use Streamlit's default sans-serif stack initially
+
+# You could specify a custom web font stack later if desired, e.g.:
+# font = "'Inter', 'system-ui', 'sans-serif'" 

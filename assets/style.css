@@ -11,67 +11,96 @@ div[data-testid="stAppViewContainer"] > section {
 
 /* Sidebar Styling */
 [data-testid="stSidebar"] > div:first-child {
-    /* config.toml sets secondaryBackgroundColor */
     padding-top: 2rem;
+    border-right: 1px solid #dee2e6; /* Subtle border */
+}
+
+[data-testid="stSidebar"] h2 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #343a40;
+    padding: 0 1.5rem; /* Adjust padding */
+    margin-bottom: 2rem;
 }
 
 /* Sidebar Step Indicator Styling */
+[data-testid="stSidebar"] .stMarkdown {
+    padding: 0 1rem; /* More horizontal padding for items */
+}
+
 [data-testid="stSidebar"] .stMarkdown p {
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    margin-bottom: 0.5rem;
-    font-size: 1rem;
-    color: #6c757d; /* Default inactive step color */
+    padding: 0.8rem 1.25rem;
+    margin-bottom: 0.6rem;
+    border-radius: 8px;
+    transition: background-color 0.2s ease, color 0.2s ease, border-left-color 0.2s ease;
+    color: #495057;
     background-color: transparent;
+    border-left: 4px solid transparent; /* Indicator space */
+    font-weight: 500; /* Slightly bolder than default */
+    font-size: 0.95rem;
 }
 
 [data-testid="stSidebar"] .stMarkdown p strong {
-    color: #0d6efd; /* Active step color (matches primaryColor) */
+    color: #0d6efd; /* primaryColor */
     font-weight: 600;
 }
 
-[data-testid="stSidebar"] .stMarkdown p:hover {
+/* Style the specific paragraph that contains the bold (active) text */
+[data-testid="stSidebar"] .stMarkdown p:has(strong) {
+    background-color: #e7f1ff;
+    border-left-color: #0d6efd;
+    color: #0a58ca; /* Slightly darker blue text when active */
+}
+
+[data-testid="stSidebar"] .stMarkdown p:hover:not(:has(strong)) {
     background-color: #e9ecef;
+    border-left-color: #adb5bd;
 }
 
 /* Main Content Area Styling */
 .main .block-container {
-    /* config.toml sets backgroundColor */
-    padding: 2rem;
+    padding: 2.5rem 3.5rem !important; /* Generous padding */
 }
 
 /* Input Field & Label Styling */
 [data-testid="stTextInput"] label,
 [data-testid="stNumberInput"] label,
 [data-testid="stTextArea"] label,
-[data-testid="stSelectbox"] label {
-    visibility: visible !important; /* Keep visibility override */
-    display: block !important; /* Keep display override */
-    font-weight: 600;
-    color: #495057;
-    margin-bottom: 0.5rem;
+[data-testid="stSelectbox"] label,
+div[data-testid="stRadio"] > label /* Label for Radio Group */
+{
+    display: block !important;
+    visibility: visible !important;
+    font-weight: 600; /* Bolder labels */
+    color: #343a40;
+    margin-bottom: 0.6rem;
+    font-size: 1rem;
 }
 
 [data-testid="stTextInput"] input,
 [data-testid="stNumberInput"] input,
 [data-testid="stTextArea"] textarea,
 [data-testid="stSelectbox"] [data-baseweb="select"] > div {
-    background-color: #ffffff; /* Ensure inputs are white */
-    color: #212529; /* Ensure text is dark */
-    border: 1px solid #ced4da;
-    border-radius: 8px;
-    padding: 0.5rem 1rem;
+    background-color: #ffffff !important;
+    color: #212529 !important;
+    border: 1px solid #ced4da !important;
+    border-radius: 8px !important;
+    padding: 0.7rem 1.1rem !important; /* Match button padding */
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    font-size: 1rem;
 }
 
 /* Style Number Input Buttons */
 [data-testid="stNumberInput"] button {
-    background-color: #e9ecef !important; /* Light grey background */
-    color: #495057 !important; /* Dark grey icon/text */
-    border: 1px solid #ced4da !important; /* Match input border */
+    background-color: #ffffff !important;
+    color: #495057 !important;
+    border: 1px solid #ced4da !important;
+    border-radius: 5px !important;
+    transition: background-color 0.2s ease;
 }
 
 [data-testid="stNumberInput"] button:hover {
-    background-color: #dee2e6 !important; /* Slightly darker grey */
+    background-color: #f8f9fa !important;
     border-color: #adb5bd !important;
 }
 
@@ -86,66 +115,152 @@ div[data-testid="stAppViewContainer"] > section {
 }
 
 /* Header Styling (Let config.toml handle base color) */
-h1, h2, h3 {
-    /* color: #212529; */ /* Let theme handle */
+h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
+    color: #212529; /* Ensure headings are dark */
+}
+
+/* Adjust specific header sizes if needed */
+.main .block-container h1, /* Main page title (potentially set via st.title) */
+.main .block-container h2 {
+    margin-bottom: 1.5rem;
+}
+
+.main .block-container h3 {
+    /* Step headers */
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #343a40;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 0.75rem;
+    margin-bottom: 2.5rem; /* More space after header */
+}
+
+.main .block-container h4 {
+    /* Sub-headers within steps */
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #495057;
+    margin-top: 2rem; /* Add space above sub-headers */
+    margin-bottom: 1.25rem;
 }
 
 /* Button Styling */
 .stButton>button {
     border-radius: 8px !important;
-    padding: 0.5rem 1.5rem !important;
-    font-weight: 600 !important;
-    border: 1px solid #0d6efd !important; /* Use primaryColor */
-    background-color: #0d6efd !important; /* Use primaryColor */
+    padding: 0.7rem 1.6rem !important; /* Refined padding */
+    font-weight: 600 !important; /* Bolder */
+    font-size: 0.95rem !important;
+    border: 1px solid transparent !important;
+    transition: all 0.2s ease;
+    line-height: 1.5;
+}
+
+/* Primary Button (Blue) */
+.stButton>button[kind="primary"] {
+    background-color: #0d6efd !important;
     color: white !important;
-    transition: background-color 0.2s ease, border-color 0.2s ease;
+    border-color: #0d6efd !important;
 }
 
-.stButton>button:hover {
-    background-color: #0b5ed7 !important; /* Darker shade */
+.stButton>button[kind="primary"]:hover {
+    background-color: #0b5ed7 !important;
     border-color: #0a58ca !important;
-    color: white !important;
+    box-shadow: 0 4px 8px rgba(13, 110, 253, 0.2);
+    transform: translateY(-1px);
 }
 
-.stButton>button:active {
-    background-color: #0a58ca !important;
-    border-color: #0a58ca !important;
+.stButton>button[kind="primary"]:focus {
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.5) !important;
 }
 
-/* Styling for secondary/non-primary buttons (like Simulate Response) */
-/* You might need to add specific keys or classes to buttons if you want them styled differently */
-/* Example: If a button has key="secondary_button", you could target it */
-/* .stButton [data-testid="stButton-secondary_button"]>button { ... } */
-
-/* Input Field Styling */
-[data-testid="stTextInput"] label,
-[data-testid="stNumberInput"] label,
-[data-testid="stTextArea"] label,
-[data-testid="stSelectbox"] label {
-    font-weight: 600; /* Bolder labels */
-    margin-bottom: 0.5rem; /* Space below label */
-    display: block;
+.stButton>button[kind="primary"]:active {
+     background-color: #0a58ca !important;
+     transform: translateY(0px);
+     box-shadow: none;
 }
 
-[data-testid="stTextInput"] input,
-[data-testid="stNumberInput"] input,
-[data-testid="stTextArea"] textarea,
-[data-testid="stSelectbox"] [data-baseweb="select"] > div {
-    border-radius: 8px !important; /* Rounded corners */
-    border: 1px solid #ced4da !important; /* Standard Bootstrap grey border */
-    padding: 0.5rem 1rem !important; /* Adjust padding */
+/* Secondary Button (Light Grey / Outlined) */
+.stButton>button[kind="secondary"] {
+    background-color: #ffffff !important;
+    color: #495057 !important;
+    border: 1px solid #ced4da !important;
 }
 
-[data-testid="stTextInput"] input:focus,
-[data-testid="stNumberInput"] input:focus,
-[data-testid="stTextArea"] textarea:focus,
-[data-testid="stSelectbox"] [data-baseweb="select"] > div:focus-within {
-    border-color: #86b7fe !important; /* Blue border on focus */
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25) !important; /* Blue shadow on focus */
+.stButton>button[kind="secondary"]:hover {
+    background-color: #f8f9fa !important;
+    border-color: #adb5bd !important;
+    color: #212529 !important;
 }
 
-/* Header Styling */
-h1, h2, h3 {
-    color: #212529; /* Darker text color for headers */
+.stButton>button[kind="secondary"]:focus {
+     box-shadow: 0 0 0 0.25rem rgba(206, 212, 218, 0.5) !important;
+     border-color: #adb5bd !important;
+}
+
+.stButton>button[kind="secondary"]:active {
+     background-color: #e9ecef !important;
+}
+
+/* Align buttons to the right if needed (example for step 0) */
+div[data-testid="stHorizontalBlock"] .stButton {
+   text-align: right;
+}
+
+/* --- Radio Buttons --- */
+
+div[data-testid="stRadio"] > div {
+    /* Container for radio options */
+    display: flex;
+    flex-direction: column; /* Stack vertically */
+    gap: 0.75rem; /* Space between radio options */
+}
+
+div[data-testid="stRadio"] label {
+    display: flex;
+    align-items: center;
+    padding: 0.8rem 1.2rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin-bottom: 0; /* Remove default margin */
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.1s ease;
+    background-color: #ffffff;
+}
+
+div[data-testid="stRadio"] label:hover {
+    background-color: #f8f9fa;
+    border-color: #adb5bd;
+}
+
+div[data-testid="stRadio"] label input[type="radio"] {
+    margin-right: 0.8rem;
+    accent-color: #0d6efd;
+    transform: scale(1.1);
+}
+
+div[data-testid="stRadio"] label:has(input[type="radio"]:checked) {
+    background-color: #e7f1ff;
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 1px #0d6efd;
+}
+
+/* --- Text Area --- */
+div[data-testid="stTextArea"] textarea {
+    min-height: 160px;
+    font-size: 1rem;
+}
+
+/* --- Misc --- */
+
+/* Make spinners use primary color */
+[data-testid="stSpinner"] > div {
+    border-top-color: #0d6efd !important;
+}
+
+/* Improve Alert/Message Styling */
+div[data-testid="stAlert"] {
+    border-radius: 8px !important;
+    padding: 1rem 1.25rem !important;
+    font-size: 0.95rem;
 } 

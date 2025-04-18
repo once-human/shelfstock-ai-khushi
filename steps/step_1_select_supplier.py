@@ -14,17 +14,31 @@ def render_select_supplier():
             st.error("No suppliers available. Please add suppliers to the system.")
             return
             
-        # Display suppliers with their ratings
-        selected_supplier = st.radio(
-            "Select a Supplier",
-            options=[(s['id'], f"{s['name']} (Rating: {s['rating']}/5)") for s in suppliers],
-            format_func=lambda x: x[1]
+        st.markdown("Please choose a supplier from the list below.")
+
+        # Using st.radio - CSS will style the individual radio labels
+        selected_supplier_display = st.radio(
+            "Available Suppliers", # Label for the radio group
+            options=[(s['id'], f"{s['name']} (Rating: {s.get('rating', 'N/A')}/5)") for s in suppliers],
+            format_func=lambda x: x[1], # Show only the formatted name/rating
+            key="selected_supplier_radio",
+            label_visibility="collapsed" # Hide the main radio group label, use markdown above instead
         )
-        
-        if st.button("Next Step", type="primary"):
-            st.session_state['selected_supplier_id'] = selected_supplier[0]
-            st.session_state['current_step'] = 2
-            st.rerun()
+
+        if selected_supplier_display:
+            selected_supplier_id = selected_supplier_display[0]
+            # Optional: Display details of the selected one if needed
+            # supplier_details = next((s for s in suppliers if s['id'] == selected_supplier_id), None)
+            # if supplier_details:
+            #    with st.expander("Selected Supplier Details"):
+            #        st.write(supplier_details)
+
+            if st.button("Next Step", type="primary"):
+                st.session_state['selected_supplier_id'] = selected_supplier_id
+                st.session_state['current_step'] = 2
+                st.rerun()
+        else:
+            st.info("Please select a supplier to continue.")
             
     except Exception as e:
         st.error(f"Error loading suppliers: {str(e)}") 

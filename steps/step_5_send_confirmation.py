@@ -1,13 +1,13 @@
 import streamlit as st
-from utils.data_handler import get_supplier_by_id, get_worker_by_id # Use DB functions
+from utils.data_handler import get_supplier_by_id, get_worker_by_id
 from code_library.openai_api_helper import generate_completion
-from utils.email_handler import send_email # Import email sender
+# from utils.email_handler import send_email # No longer sending real email
 import configs
 import time
 
 def render_send_confirmation():
-    """Render the send confirmation step: AI drafts message, user confirms, email sent."""
-    st.header("Step 5: Send Order Confirmation")
+    """Render the send confirmation step: AI drafts message, user confirms, simulates sending."""
+    st.header("Step 5: Generate Order Confirmation") # Renamed header
     
     supplier_id = st.session_state.get('selected_supplier_id')
     worker_id = st.session_state.get('selected_worker_id')
@@ -21,7 +21,7 @@ def render_send_confirmation():
 
     product_name = st.session_state.get('product_name')
     quantity = st.session_state.get('quantity')
-    supplier_email = supplier.get('contact_email')
+    supplier_email = supplier.get('contact_email') # Still useful to display
 
     # State for confirmation generation and sending
     if 'confirmation_message_content' not in st.session_state:
@@ -35,7 +35,7 @@ def render_send_confirmation():
         st.write(f"Drafting order confirmation for **{supplier['name']}** regarding **{quantity} x {product_name}**...")
         
         prompt = f"""
-        Generate a polite and professional order confirmation email to be sent to a supplier.
+        Generate a polite and professional order confirmation message to be sent to a supplier.
         
         **Order Details:**
         - Product: {product_name}
@@ -48,11 +48,9 @@ def render_send_confirmation():
         - Confirm the specific product and quantity ordered.
         - State that the order is confirmed and provide the name/role of the internal contact person ({worker['name']}).
         - Thank the supplier for their business.
-        - Do NOT include a subject line.
-        - Do NOT include salutations or closings.
         """
         message_history = [
-            {"role": "system", "content": "You draft concise, professional supplier order confirmation emails."},
+            {"role": "system", "content": "You draft concise, professional supplier order confirmation messages."},
             {"role": "user", "content": prompt}
         ]
 
@@ -63,41 +61,33 @@ def render_send_confirmation():
             st.rerun()
         except Exception as e:
             st.error(f"Failed to generate confirmation using AI: {e}")
-            st.session_state['confirmation_message_content'] = "Error generating confirmation."
+            st.session_state['confirmation_message_content'] = f"Error generating confirmation: {e}"
 
-    # --- 2. Display Confirmation and Send Button (if generated, not sent) ---
+    # --- 2. Display Confirmation and Simulate Send Button (if generated, not sent) ---
     elif st.session_state['confirmation_message_content'] is not None and not st.session_state['confirmation_message_sent']:
         st.subheader("Confirmation Preview (Drafted by AI)")
         confirmation_body = st.session_state['confirmation_message_content']
-        st.text_area("Email Body", value=confirmation_body, height=300, key="confirmation_message_display")
+        st.text_area("Confirmation Body", value=confirmation_body, height=300, key="confirmation_message_display")
         
-        if not supplier_email:
-            st.warning(f"Supplier {supplier['name']} does not have a contact email in the database. Cannot send email.", icon="⚠️")
+        if supplier_email:
+             st.write(f"(Simulating send to: {supplier_email})")
         else:
-            st.write(f"**Recipient:** {supplier_email}")
-            subject = f"Order Confirmation: {quantity} x {product_name}"
-            st.write(f"**Subject:** {subject}")
+             st.warning(f"No contact email found for {supplier['name']}, but proceeding with simulation.", icon="⚠️")
             
-            # Button to actually send the email
-            if st.button("Send Confirmation Email", type="primary", disabled=(not supplier_email)):
-                with st.spinner(f"Sending confirmation to {supplier_email}..."):
-                    success = send_email(
-                        recipient_email=supplier_email, 
-                        subject=subject, 
-                        body=confirmation_body
-                    )
-                
-                if success:
-                    st.success(f"Confirmation email sent successfully to {supplier['name']}.")
-                    st.session_state['confirmation_message_sent'] = True
-                    time.sleep(2)
-                    st.session_state['current_step'] = 6
-                    st.rerun()
-                # Error handled in send_email
+        # Button to simulate sending the email
+        if st.button("Confirm and Complete Order (Simulate Send)", type="primary"):
+            with st.spinner(f"Simulating sending confirmation..."):
+                time.sleep(1.5) # Simulate network delay
+            
+            st.success(f"Confirmation marked as sent to {supplier['name']}. Order complete!")
+            st.session_state['confirmation_message_sent'] = True
+            time.sleep(1)
+            st.session_state['current_step'] = 6
+            st.rerun()
                 
     # --- 3. Show Sent Confirmation (if sent) ---
     elif st.session_state['confirmation_message_sent']:
-        st.success(f"Confirmation email sent to {supplier.get('name', 'supplier')}. Order complete!")
+        st.success(f"Confirmation marked as sent to {supplier.get('name', 'supplier')}. Order complete!")
         if st.button("View Summary", type="primary"):
              st.session_state['current_step'] = 6
              st.rerun() 
