@@ -38,19 +38,29 @@ def render_send_confirmation():
         Generate a polite and professional order confirmation message to be sent to a supplier.
         
         **Order Details:**
-        - Product: {product_name}
+        - Product Name: {product_name}
         - Quantity: {quantity}
-        - Supplier Name: {supplier['name']}
+        - Supplier Name: Yashwi Ladda
         - Assigned Internal Contact: {worker['name']} ({worker.get('role', '')})
         
         **Instructions:**
+        - Start with "Dear Yashwi Ladda,"
         - Keep the tone professional and appreciative.
-        - Confirm the specific product and quantity ordered.
-        - State that the order is confirmed and provide the name/role of the internal contact person ({worker['name']}).
-        - Thank the supplier for their business.
+        - In the first paragraph, clearly state: "This email confirms our order for {quantity} units of {product_name}."
+        - Mention that {worker['name']} ({worker.get('role', '')}) will be the dedicated point of contact for this order.
+        - Provide the contact details of the assigned worker.
+        - Express appreciation for their business.
+        - End the message with the following signature exactly as shown:
+
+        Best regards,
+
+        Khushi Banthia
+        cofounder  
+        VIA Rides  
+        khushi@viarides.in
         """
         message_history = [
-            {"role": "system", "content": "You draft concise, professional supplier order confirmation messages."},
+            {"role": "system", "content": "You draft professional order confirmation messages that are clear, concise, and include all necessary details."},
             {"role": "user", "content": prompt}
         ]
 

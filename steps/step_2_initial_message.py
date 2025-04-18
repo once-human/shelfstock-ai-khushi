@@ -40,7 +40,7 @@ def render_initial_message():
         Generate a polite and professional message to a supplier to inquire about placing an order.
         
         **Supplier Details:**
-        - Name: Onkar Yaglewad
+        - Name: Yahswi Ladda
         
         **Order Details:**
         - Product Name: {product_name}
@@ -53,7 +53,7 @@ def render_initial_message():
 
         **Instructions:**
         - Keep the tone professional and courteous.
-        - Start the message with "Dear Onkar Yaglewad,"
+        - Start the message with "Dear Yashwi Ladda,"
         - In the first paragraph, clearly state: "We are interested in ordering {quantity} units of {product_name}."
         - Request detailed information about the product specifications for {product_name}.
         - Ask for confirmation of availability, estimated lead time, and pricing/quote process.
