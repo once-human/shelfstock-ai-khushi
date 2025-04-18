@@ -1,0 +1,17 @@
+[
+    {
+        "id": "1",
+        "content": "Research generative typography for the design systems module.",
+        "tags": "typography, design, project"
+    },
+    {
+        "id": "2",
+        "content": "Ask about submission deadline for the capstone project.",
+        "tags": "capstone, deadline, project"
+    },
+    {
+        "id": "3",
+        "content": "Summarize readings from 'Design as Art' by Bruno Munari.",
+        "tags": "reading, summary, design"
+    }
+]

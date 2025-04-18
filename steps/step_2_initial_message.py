@@ -16,9 +16,14 @@ def render_initial_message():
         st.error("Supplier details not found. Please go back and select a supplier.")
         return
 
-    product_name = st.session_state.get('product_name')
-    quantity = st.session_state.get('quantity')
+    # Get product details from session state
+    product_name = st.session_state.get('product_name', '')
+    quantity = st.session_state.get('quantity', 1)
     supplier_email = supplier.get('contact_email') # Still useful to display
+
+    # Debug information
+    st.write(f"Debug - Product Name: {product_name}")
+    st.write(f"Debug - Quantity: {quantity}")
 
     # State for message generation and sending status
     if 'initial_message_content' not in st.session_state:
@@ -35,20 +40,38 @@ def render_initial_message():
         Generate a polite and professional message to a supplier to inquire about placing an order.
         
         **Supplier Details:**
-        - Name: {supplier['name']}
+        - Name: Onkar Yaglewad
         
         **Order Details:**
-        - Product: {product_name}
-        - Quantity: {quantity}
+        - Product Name: {product_name}
+        - Quantity Required: {quantity}
+        - Product Description: Please provide detailed specifications for {product_name}
+        - Quality Requirements: Please specify any quality standards or certifications needed
+        - Packaging Requirements: Please specify any special packaging needs
+        - Delivery Timeline: Please provide estimated delivery time
+        - Payment Terms: Please specify payment terms and conditions
 
         **Instructions:**
         - Keep the tone professional and courteous.
-        - Clearly state the product and quantity.
+        - Start the message with "Dear Onkar Yaglewad,"
+        - In the first paragraph, clearly state: "We are interested in ordering {quantity} units of {product_name}."
+        - Request detailed information about the product specifications for {product_name}.
         - Ask for confirmation of availability, estimated lead time, and pricing/quote process.
-        - Assume the recipient knows your company.
+        - Request information about quality standards and certifications.
+        - Inquire about packaging options and requirements.
+        - Ask about delivery timelines and logistics.
+        - Discuss payment terms and conditions.
+        - End the message with the following signature exactly as shown:
+        
+        Best regards,
+        
+        Khushi Banthia
+        cofounder  
+        VIA Rides  
+        khushi@viarides.in
         """
         message_history = [
-            {"role": "system", "content": "You draft concise, professional supplier inquiry messages."},
+            {"role": "system", "content": "You draft detailed, professional supplier inquiry messages that include comprehensive product specifications and business requirements. Always include the product name and quantity in the first paragraph."},
             {"role": "user", "content": prompt}
         ]
 
@@ -65,7 +88,7 @@ def render_initial_message():
     elif st.session_state['initial_message_content'] is not None and not st.session_state['initial_message_sent']:
         st.subheader("Message Preview (Drafted by AI)")
         message_body = st.session_state['initial_message_content']
-        st.text_area("Message Body", value=message_body, height=250, key="initial_message_display")
+        st.text_area("Message Body", value=message_body, height=300, key="initial_message_display")
         
         if supplier_email:
              st.write(f"(Simulating send to: {supplier_email})")
