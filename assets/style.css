@@ -209,40 +209,47 @@ div[data-testid="stHorizontalBlock"] .stButton {
 
 /* --- Radio Buttons --- */
 
-div[data-testid="stRadio"] > div {
-    /* Container for radio options */
-    display: flex;
-    flex-direction: column; /* Stack vertically */
-    gap: 0.75rem; /* Space between radio options */
+div[data-testid="stRadio"] > label /* Group Label */ {
+    font-weight: 500; 
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+    display: block; /* Ensure it takes block space */
+    padding-left: 0; /* Remove padding if it looks like a button */
 }
-
-div[data-testid="stRadio"] label {
+div[data-testid="stRadio"] > div { /* Options container */
+    display: flex;
+    flex-direction: column; 
+    gap: 0.5rem; 
+}
+div[data-testid="stRadio"] div[role="radiogroup"] > label { /* Individual option label */
     display: flex;
     align-items: center;
-    padding: 0.8rem 1.2rem;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    margin-bottom: 0; /* Remove default margin */
+    padding: 0.8rem 1.1rem; /* Adjust padding */
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    margin-bottom: 0; 
     cursor: pointer;
-    transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.1s ease;
-    background-color: #ffffff;
+    transition: all 0.25s ease-in-out; /* Smooth transition for all properties */
+    background-color: var(--white);
+    width: 100%; /* Make options take full width */
+    box-sizing: border-box; /* Include padding/border in width */
 }
-
-div[data-testid="stRadio"] label:hover {
-    background-color: #f8f9fa;
-    border-color: #adb5bd;
+div[data-testid="stRadio"] div[role="radiogroup"] > label:hover {
+    background-color: var(--light-blue-accent);
+    border-color: var(--primary-blue);
+    transform: translateX(3px); /* Shift on hover */
 }
-
-div[data-testid="stRadio"] label input[type="radio"] {
-    margin-right: 0.8rem;
-    accent-color: #0d6efd;
+div[data-testid="stRadio"] div[role="radiogroup"] > label input[type="radio"] {
+    margin-right: 0.8rem; /* Increased spacing */
+    accent-color: var(--primary-blue);
     transform: scale(1.1);
 }
-
-div[data-testid="stRadio"] label:has(input[type="radio"]:checked) {
-    background-color: #e7f1ff;
-    border-color: #0d6efd;
-    box-shadow: 0 0 0 1px #0d6efd;
+div[data-testid="stRadio"] div[role="radiogroup"] > label:has(input[type="radio"]:checked) {
+    background-color: var(--light-blue-accent);
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 1px var(--primary-blue);
+    font-weight: 500;
+    color: var(--text-primary);
 }
 
 /* --- Text Area --- */
@@ -272,34 +279,45 @@ div[data-testid="stAlert"] {
 
 /* Root Variables for Consistent Theming */
 :root {
-    --primary-color: #2D7FF9;
-    --primary-light: #5599FF;
-    --primary-dark: #1A66E0;
-    --secondary-color: #6C63FF;
-    --success-color: #0CAF60;
-    --warning-color: #FF9800;
-    --error-color: #FF5252;
-    --background-color: #F8FAFC;
-    --surface-color: #FFFFFF;
-    --text-primary: #1A1F36;
-    --text-secondary: #4F566B;
-    --text-tertiary: #697386;
-    --border-color: #E3E8EF;
-    --shadow-sm: 0 1px 3px rgba(16, 24, 40, 0.1);
-    --shadow-md: 0 4px 8px rgba(16, 24, 40, 0.1);
-    --shadow-lg: 0 8px 16px rgba(16, 24, 40, 0.1);
-    --radius-sm: 6px;
+    /* --- Core Colors (Inspired by InvenAI) --- */
+    --primary-blue: #4A90E2;      /* Main interactive blue */
+    --light-blue-bg: #F7FAFC;   /* Primary page background */
+    --white: #FFFFFF;           /* Card backgrounds, inputs */
+    --border-color: #E2E8F0;    /* Subtle borders */
+    --light-blue-accent: #EBF4FF; /* Highlight/active backgrounds */
+
+    /* --- Text Colors --- */
+    --text-primary: #1A202C;    /* Main headings, body text */
+    --text-secondary: #4A5568;  /* Subtitles, labels, secondary info */
+    --text-tertiary: #718096;   /* Placeholders, disabled text */
+    --text-on-primary: var(--white); /* Text on blue buttons */
+    --text-on-accent: var(--primary-blue); /* Text on light blue backgrounds */
+
+    /* --- Semantic Colors --- */
+    --success-green: #38A169;
+    --warning-orange: #DD6B20;
+    --danger-red: #E53E3E;
+    
+    /* --- Fonts & Sizing --- */
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --radius-sm: 4px;
     --radius-md: 8px;
     --radius-lg: 12px;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 /* Global Styles */
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: var(--background-color);
-    color: var(--text-primary);
+    font-family: var(--font-sans);
+    color: var(--text-secondary); /* Default to secondary for body text */
+    background-color: var(--light-blue-bg);
     margin: 0;
     padding: 0;
+    font-size: 16px; /* Base font size */
+    line-height: 1.6;
+    /* Add smooth scroll */
+    scroll-behavior: smooth;
 }
 
 /* Smooth Scrolling */
@@ -307,21 +325,38 @@ html {
     scroll-behavior: smooth;
 }
 
-/* Animation Keyframes */
+/* === Keyframes for Animations === */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes slideIn {
-    from { transform: translateX(-20px); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
+@keyframes slideUpFadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes scaleIn {
-    from { transform: scale(0.95); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+@keyframes subtlePulse {
+    0% { transform: scale(1); box-shadow: var(--shadow-md); }
+    50% { transform: scale(1.015); box-shadow: 0 8px 16px -3px rgba(0, 0, 0, 0.1), 0 4px 8px -3px rgba(0, 0, 0, 0.08); }
+    100% { transform: scale(1); box-shadow: var(--shadow-md); }
 }
+
+/* === Utility Animation Classes === */
+.animate-fadeIn {
+    animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animate-slideUpFadeIn {
+    /* Apply to elements that should slide up gently */
+    animation: slideUpFadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    opacity: 0; /* Start hidden */
+}
+
+/* Add animation delays if needed, e.g., for staggered effect */
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.3s; }
 
 /* Main Content Area */
 .main {
@@ -404,7 +439,7 @@ html {
 }
 
 .stButton > button:hover {
-    transform: translateY(-1px);
+    transform: translateY(-2px);
     box-shadow: var(--shadow-md);
 }
 
@@ -520,46 +555,6 @@ html {
 /* Prevent multiple spinners */
 .stSpinner ~ .stSpinner {
     display: none !important;
-}
-
-/* Enhanced Animation Keyframes */
-@keyframes fadeIn {
-    from { 
-        opacity: 0; 
-        transform: translateY(10px); 
-    }
-    to { 
-        opacity: 1; 
-        transform: translateY(0); 
-    }
-}
-
-@keyframes slideIn {
-    from { 
-        transform: translateX(-10px); 
-        opacity: 0; 
-    }
-    to { 
-        transform: translateX(0); 
-        opacity: 1; 
-    }
-}
-
-@keyframes scaleIn {
-    from { 
-        transform: scale(0.98); 
-        opacity: 0; 
-    }
-    to { 
-        transform: scale(1); 
-        opacity: 1; 
-    }
-}
-
-@keyframes pulseGlow {
-    0% { box-shadow: 0 0 0 0 rgba(45, 127, 249, 0.4); }
-    70% { box-shadow: 0 0 0 10px rgba(45, 127, 249, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(45, 127, 249, 0); }
 }
 
 /* Smooth Content Transitions */
@@ -758,4 +753,217 @@ a {
 a:hover {
     color: var(--primary-dark);
     text-decoration: underline;
+}
+
+/* === Custom Classes === */
+
+/* Card Container */
+.card {
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    margin-bottom: 1.75rem;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out; /* Smooth transition */
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px); /* Subtle lift on hover */
+}
+
+/* Sidebar Styling */
+[data-testid="stSidebar"] {
+    background-color: var(--white);
+    border-right: 1px solid var(--border-color);
+    padding: 1.5rem 1rem;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem; /* Space between logo and text */
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar-logo {
+    /* Placeholder for logo - adjust size as needed */
+    width: 36px;
+    height: 36px;
+    background-color: var(--primary-blue);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.sidebar-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.sidebar-subtitle {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.sidebar-step {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    margin: 0.25rem 0;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out, border-color 0.25s ease-in-out, transform 0.2s ease-out;
+    cursor: default; /* Not clickable */
+    gap: 0.75rem; /* Space between icon and text */
+}
+
+.sidebar-step-active {
+    background-color: #EBF4FF; /* Light blue */
+    color: var(--primary-blue);
+    font-weight: 600;
+}
+
+.sidebar-step-completed {
+    color: var(--text-secondary);
+}
+
+.sidebar-step-completed span {
+     /* Optional: Slightly lighter text or strike-through */
+}
+
+.sidebar-step-inactive {
+    color: var(--text-tertiary);
+}
+
+.sidebar-step-icon {
+    /* Basic styling for icons */
+    font-size: 1.1rem;
+}
+
+.sidebar-step:not(.sidebar-step-active):hover {
+     background-color: #F1F5F9; 
+     color: var(--text-primary);
+     transform: translateX(4px); /* Slightly more pronounced shift */
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.875rem;
+    color: var(--text-tertiary);
+    border-top: 1px solid var(--border-color);
+    margin-top: 2rem;
+}
+
+/* AI Insight Panel Styling (Example - adapt as needed) */
+.stExpander {
+    border: none;
+    border-radius: 8px;
+    background-color: var(--white);
+    margin-bottom: 1rem;
+}
+
+.stExpander header {
+    background-color: #EBF4FF; /* Light blue background for header */
+    color: var(--primary-blue);
+    font-weight: 500;
+    border-radius: 8px 8px 0 0;
+    padding: 0.75rem 1.25rem;
+}
+
+.stExpander div[data-testid="stExpanderDetails"] {
+    padding: 1rem 1.25rem;
+    background-color: var(--white);
+    border: 1px solid #EBF4FF; /* Match header border */
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+}
+
+/* Data Display */
+.data-metric {
+    padding: 1rem;
+    background-color: #F7FAFC; /* Light background */
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.data-metric-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+}
+
+.data-metric-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* === Final Confirmation Animation (Refined) === */
+.final-summary-card {
+    /* Apply a combined animation */
+    animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards, subtlePulse 2s ease-in-out 0.6s 1; /* Fade in first, then pulse once */
+    opacity: 0; /* Start hidden for fadeIn */
+}
+
+/* === AI Insight Box (Add subtle animation class target) === */
+.ai-insight-box {
+    /* Animation applied via class .animate-slideUpFadeIn */
+}
+
+/* === Forms & Inputs (Refined focus) === */
+[data-testid="stTextInput"] input:focus,
+[data-testid="stNumberInput"] input:focus,
+[data-testid="stTextArea"].focused,
+[data-testid="stSelectbox"] [data-baseweb="select"] > div:focus-within {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px var(--light-blue-accent), 0 1px 3px rgba(0,0,0,0.1) inset; /* Add subtle inset shadow */
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Ensure focus transition is smooth */
+}
+
+/* === Buttons (Enhanced hover/active) === */
+.stButton > button {
+    /* ... (keep base styles) ... */
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stButton > button:hover {
+     transform: translateY(-3px); /* More lift */
+     box-shadow: 0 4px 8px -2px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06); /* Softer shadow */
+}
+
+.stButton > button:active {
+    transform: translateY(-1px); /* Subtle press effect */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08) inset; 
+}
+
+/* === Misc === */
+hr {
+    border: none;
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 2.5rem 0; /* More vertical space */
+}
+
+/* Spinner (Keep simple) */
+[data-testid="stSpinner"] > div {
+    border-top-color: var(--primary-blue) !important;
+    border-right-color: transparent !important;
+    border-bottom-color: transparent !important;
+    border-left-color: transparent !important;
+    /* Consider adding width/height if default is too small */
+    /* width: 3rem !important; */
+    /* height: 3rem !important; */
 } 

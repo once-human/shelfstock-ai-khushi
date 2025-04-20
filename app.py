@@ -13,13 +13,26 @@ from pathlib import Path
 import configs # Import configs
 
 # Initialize Database (Run once if DB doesn't exist)
-# In a real deployment, this might be handled differently (e.g., separate script)
-if not Path("data/app_data.db").exists():
-    try:
+# Wrap in try-except to prevent app crash if DB is locked or permissions issue
+try:
+    db_path = Path("data/app_data.db")
+    if not db_path.exists():
+        print("Database file not found, initializing...")
         init_database()
-    except Exception as e:
-        st.error(f"Database initialization failed: {e}")
-        st.stop() # Stop the app if DB can't be initialized
+        print("Database initialization complete.")
+except Exception as e:
+    st.error(f"Database check/initialization failed: {e}")
+    st.warning("Please ensure the data directory exists and has write permissions.")
+    # Optionally st.stop() if DB is critical
+
+# --- Page Config and Styling --- 
+# Needs to be the first Streamlit command
+st.set_page_config(
+    page_title="Banthia's Quick Store",
+    page_icon="🛒", # Changed icon
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
 # Function to load CSS
 def load_css(file_name):
@@ -27,21 +40,16 @@ def load_css(file_name):
     if css_path.is_file():
         with open(css_path) as f:
             st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
-
-# Set page config with custom theme
-st.set_page_config(
-    page_title="Banthia's Quick Store - Supplier Order Management",
-    page_icon="🏭",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
-
-# Initialize session state
-init_session_state()
+    else:
+        st.warning(f"CSS file not found: {css_path}")
 
 # Load custom CSS
 load_css("style.css")
 
+# Initialize session state (after page config)
+init_session_state()
+
+# --- Sidebar Rendering --- 
 # Define step names and icons 
 # Try loading from configs.py, fallback to default
 DEFAULT_STEPS_CONFIG = {
@@ -55,69 +63,69 @@ DEFAULT_STEPS_CONFIG = {
 }
 STEPS_CONFIG = getattr(configs, 'STEPS_CONFIG', DEFAULT_STEPS_CONFIG)
 
-# Render sidebar step tracker with enhanced styling
 with st.sidebar:
+    # Sidebar Header (Logo Placeholder + Title)
     st.markdown("""
-        <div style='text-align: center; margin-bottom: 2rem;'>
-            <h1 style='color: var(--text-primary); font-size: 1.5rem; margin-bottom: 0.5rem;'>Banthia's Quick Store</h1>
-            <p style='color: var(--text-secondary); font-size: 0.875rem;'>Supplier Order Management</p>
+        <div class='sidebar-header'>
+            <div>
+                <div class='sidebar-title'>Banthia's Quick Store</div>
+                <div class='sidebar-subtitle'>Supplier Order Management</div>
+            </div>
         </div>
     """, unsafe_allow_html=True)
     
+    st.write("") # Add some space
+    st.subheader("Order Progress")
+    
     current_step = st.session_state.get('current_step', 0)
     
+    # Render Step Navigation
     for step_num, config in STEPS_CONFIG.items():
         step_name = config["name"]
         icon = config["icon"]
-        
+        step_class = "sidebar-step-inactive"
         if step_num == current_step:
-            st.markdown(f"""
-                <div class='step-active'>
-                    <strong>{icon} {step_name}</strong>
-                </div>
-            """, unsafe_allow_html=True)
+            step_class = "sidebar-step-active"
         elif step_num < current_step:
-            st.markdown(f"""
-                <div class='step-completed'>
-                    <span>✅ {step_name}</span>
-                </div>
-            """, unsafe_allow_html=True)
-        else:
-            st.markdown(f"""
-                <div class='step-inactive'>
-                    {icon} {step_name}
-                </div>
-            """, unsafe_allow_html=True)
+            step_class = "sidebar-step-completed"
+            icon = "✅" # Use checkmark for completed steps
 
-# Main content area with card container
-st.markdown("""
-    <div class='card-container'>
-""", unsafe_allow_html=True)
+        st.markdown(f"""
+            <div class='sidebar-step {step_class}'>
+                <span class='sidebar-step-icon'>{icon}</span> 
+                <span>{step_name}</span>
+            </div>
+        """, unsafe_allow_html=True)
+
+# --- Main Content Area --- 
 
 # Render main content area based on current step
-if current_step == 0:
-    render_product_details()
-elif current_step == 1:
-    render_select_supplier()
-elif current_step == 2:
-    render_initial_message()
-elif current_step == 3:
-    render_await_response()
-elif current_step == 4:
-    render_assign_worker()
-elif current_step == 5:
-    render_send_confirmation()
-elif current_step == 6:
-    render_complete()
-# TODO: Add other steps as they are implemented 
+main_content_area = st.container()
+with main_content_area:
+    current_step = st.session_state.get('current_step', 0)
+    if current_step == 0:
+        render_product_details()
+    elif current_step == 1:
+        render_select_supplier()
+    elif current_step == 2:
+        render_initial_message()
+    elif current_step == 3:
+        render_await_response()
+    elif current_step == 4:
+        render_assign_worker()
+    elif current_step == 5:
+        render_send_confirmation()
+    elif current_step == 6:
+        render_complete()
+    else:
+        st.error("Invalid step number.")
+        st.button("Restart Process", on_click=lambda: st.session_state.clear() or st.rerun())
 
-st.markdown("""
-    </div>
-""", unsafe_allow_html=True)
+# --- Footer --- 
 
-# Footer
+st.markdown("--- ") # Visual separator
 st.markdown("""
-    <div style='text-align: center; margin-top: 2rem; padding: 1rem; color: var(--text-tertiary); font-size: 0.875rem;'>
-        © 2025 Banthia's Quick Store. All rights reserved.
+    <div class='footer'>
+        © 2024 Banthia's Quick Store. All rights reserved. | Built with Streamlit by Khushi
     </div>
 """, unsafe_allow_html=True) 
