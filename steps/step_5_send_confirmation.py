@@ -47,7 +47,7 @@ def render_send_confirmation():
         - Start with "Dear Yashwi Ladda,"
         - Keep the tone professional and appreciative.
         - In the first paragraph, clearly state: "This email confirms our order for {quantity} units of {product_name}."
-        - Mention that {worker['name']} ({worker.get('role', '')}) will be the dedicated point of contact for this order.
+        - Mention that {worker['name']} ({worker.get('role', '')}) will be the udedicated point of contact for this order.
         - Provide the contact details of the assigned worker.
         - Express appreciation for their business.
         - End the message with the following signature exactly as shown:
@@ -55,9 +55,9 @@ def render_send_confirmation():
         Best regards,
 
         Khushi Banthia
-        cofounder  
-        VIA Rides  
-        khushi@viarides.in
+        owner
+        Banthia's Quick Store
+        khushibanthia19@gmail.com
         """
         message_history = [
             {"role": "system", "content": "You draft professional order confirmation messages that are clear, concise, and include all necessary details."},

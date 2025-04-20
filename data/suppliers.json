@@ -2,24 +2,53 @@
     "suppliers": [
         {
             "id": "sup_001",
-            "name": "Global Supply Co.",
-            "rating": 4.5,
-            "specialties": ["Electronics", "Components"],
-            "contact_email": "contact@globalsupply.com"
+            "name": "Aarav Enterprises",
+            "rating": 4.7,
+            "specialties": ["Pulses", "Grains", "Spices"],
+            "location": "Mumbai, Maharashtra",
+            "contact_email": "sales@aaraventerprises.in",
+            "minimum_order_qty": 50, 
+            "notes": "Known for high-quality organic lentils and basmati rice."
         },
         {
             "id": "sup_002",
-            "name": "Quality Parts Ltd.",
-            "rating": 4.8,
-            "specialties": ["Mechanical Parts", "Tools"],
-            "contact_email": "info@qualityparts.com"
+            "name": "Priya Foods Pvt. Ltd.",
+            "rating": 4.5,
+            "specialties": ["Snacks", "Packaged Goods", "Beverages"],
+            "location": "Delhi NCR",
+            "contact_email": "orders@priyafoods.com",
+            "minimum_order_qty": 100,
+            "notes": "Wide range of popular branded snacks and drinks. Reliable delivery."
         },
         {
             "id": "sup_003",
-            "name": "Tech Solutions Inc.",
-            "rating": 4.2,
-            "specialties": ["Software", "Hardware"],
-            "contact_email": "support@techsolutions.com"
+            "name": "Lakshmi Spices & Co.",
+            "rating": 4.9,
+            "specialties": ["Whole Spices", "Ground Spices", "Spice Blends"],
+            "location": "Kochi, Kerala",
+            "contact_email": "info@lakshmispices.co.in",
+            "minimum_order_qty": 25,
+            "notes": "Authentic Kerala spices, directly sourced. Excellent aroma and quality."
+        },
+        {
+            "id": "sup_004",
+            "name": "Rajdhani Daily Needs",
+            "rating": 4.3,
+            "specialties": ["Dairy Products", "Fresh Produce", "Household Items"],
+            "location": "Jaipur, Rajasthan",
+            "contact_email": "support@rajdhanidaily.in",
+            "minimum_order_qty": 75,
+            "notes": "Focuses on fresh dairy and local produce. Also supplies cleaning products."
+        },
+        {
+            "id": "sup_005",
+            "name": "Sai Kirana Wholesalers",
+            "rating": 4.6,
+            "specialties": ["General Kirana", "Imported Goods", "Bulk Orders"],
+            "location": "Pune, Maharashtra",
+            "contact_email": "bulk@saikirana.com",
+            "minimum_order_qty": 200,
+            "notes": "Competitive pricing for bulk purchases across various categories."
         }
     ]
 } 

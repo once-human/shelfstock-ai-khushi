@@ -263,4 +263,499 @@ div[data-testid="stAlert"] {
     border-radius: 8px !important;
     padding: 1rem 1.25rem !important;
     font-size: 0.95rem;
+}
+
+/* Modern UI Theme for Supplier Order Management */
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Root Variables for Consistent Theming */
+:root {
+    --primary-color: #2D7FF9;
+    --primary-light: #5599FF;
+    --primary-dark: #1A66E0;
+    --secondary-color: #6C63FF;
+    --success-color: #0CAF60;
+    --warning-color: #FF9800;
+    --error-color: #FF5252;
+    --background-color: #F8FAFC;
+    --surface-color: #FFFFFF;
+    --text-primary: #1A1F36;
+    --text-secondary: #4F566B;
+    --text-tertiary: #697386;
+    --border-color: #E3E8EF;
+    --shadow-sm: 0 1px 3px rgba(16, 24, 40, 0.1);
+    --shadow-md: 0 4px 8px rgba(16, 24, 40, 0.1);
+    --shadow-lg: 0 8px 16px rgba(16, 24, 40, 0.1);
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+}
+
+/* Global Styles */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-primary);
+    margin: 0;
+    padding: 0;
+}
+
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Animation Keyframes */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-20px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* Main Content Area */
+.main {
+    animation: fadeIn 0.5s ease-out;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Headers */
+.stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
+    color: var(--text-primary);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    animation: slideIn 0.5s ease-out;
+}
+
+/* Sidebar Styling */
+.css-1d391kg {
+    background-color: var(--surface-color);
+    border-right: 1px solid var(--border-color);
+    padding: 2rem 1rem;
+}
+
+/* Step Tracker in Sidebar */
+.sidebar .element-container {
+    animation: slideIn 0.3s ease-out;
+    margin-bottom: 0.75rem;
+}
+
+/* Active Step Styling */
+.sidebar .element-container:has(strong) {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    transform: scale(1.02);
+    transition: all 0.3s ease;
+}
+
+/* Completed Step Styling */
+.sidebar .element-container:has(span:contains("✅")) {
+    color: var(--success-color);
+    opacity: 0.8;
+}
+
+/* Input Fields */
+.stTextInput > div > div {
+    border-radius: var(--radius-md);
+    border: 2px solid var(--border-color);
+    transition: all 0.2s ease;
+    animation: scaleIn 0.3s ease-out;
+}
+
+.stTextInput > div > div:focus-within {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(45, 127, 249, 0.1);
+}
+
+/* Number Input */
+.stNumberInput > div > div {
+    border-radius: var(--radius-md);
+    border: 2px solid var(--border-color);
+    transition: all 0.2s ease;
+}
+
+.stNumberInput > div > div:focus-within {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(45, 127, 249, 0.1);
+}
+
+/* Buttons */
+.stButton > button {
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    animation: scaleIn 0.3s ease-out;
+}
+
+.stButton > button:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.stButton > button[kind="primary"] {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+}
+
+/* Cards and Info Boxes */
+.stAlert {
+    border-radius: var(--radius-lg);
+    border: none;
+    box-shadow: var(--shadow-sm);
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Success Message */
+.element-container:has(.stSuccess) {
+    animation: scaleIn 0.3s ease-out;
+}
+
+.stSuccess {
+    background: linear-gradient(135deg, var(--success-color), #08965A);
+    color: white;
+    border-radius: var(--radius-lg);
+    padding: 1rem;
+    border: none;
+}
+
+/* Error Message */
+.stError {
+    background: linear-gradient(135deg, var(--error-color), #E63946);
+    color: white;
+    border-radius: var(--radius-lg);
+    border: none;
+}
+
+/* Radio Buttons */
+.stRadio > div {
+    animation: fadeIn 0.3s ease-out;
+}
+
+.stRadio > div > label {
+    padding: 1rem;
+    border-radius: var(--radius-md);
+    border: 2px solid var(--border-color);
+    transition: all 0.2s ease;
+    margin-bottom: 0.5rem;
+}
+
+.stRadio > div > label:hover {
+    border-color: var(--primary-color);
+    background-color: rgba(45, 127, 249, 0.05);
+}
+
+/* Text Areas */
+.stTextArea > div > div {
+    border-radius: var(--radius-md);
+    border: 2px solid var(--border-color);
+    transition: all 0.2s ease;
+}
+
+.stTextArea > div > div:focus-within {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(45, 127, 249, 0.1);
+}
+
+/* Progress Indicators */
+.stProgress {
+    height: 6px;
+    border-radius: var(--radius-sm);
+    background-color: var(--primary-light);
+}
+
+/* Tooltips and Popovers */
+[data-baseweb="tooltip"] {
+    background-color: var(--surface-color);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border-color);
+}
+
+/* Selectbox */
+.stSelectbox > div > div {
+    border-radius: var(--radius-md);
+    border: 2px solid var(--border-color);
+    transition: all 0.2s ease;
+}
+
+.stSelectbox > div > div:focus-within {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(45, 127, 249, 0.1);
+}
+
+/* Loading Spinner */
+.stSpinner {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    z-index: 9999 !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+    padding: 2rem !important;
+    border-radius: var(--radius-lg) !important;
+    box-shadow: var(--shadow-lg) !important;
+    animation: fadeInFixed 0.3s ease-out !important;
+}
+
+@keyframes fadeInFixed {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Prevent multiple spinners */
+.stSpinner ~ .stSpinner {
+    display: none !important;
+}
+
+/* Enhanced Animation Keyframes */
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(10px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+@keyframes slideIn {
+    from { 
+        transform: translateX(-10px); 
+        opacity: 0; 
+    }
+    to { 
+        transform: translateX(0); 
+        opacity: 1; 
+    }
+}
+
+@keyframes scaleIn {
+    from { 
+        transform: scale(0.98); 
+        opacity: 0; 
+    }
+    to { 
+        transform: scale(1); 
+        opacity: 1; 
+    }
+}
+
+@keyframes pulseGlow {
+    0% { box-shadow: 0 0 0 0 rgba(45, 127, 249, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(45, 127, 249, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(45, 127, 249, 0); }
+}
+
+/* Smooth Content Transitions */
+.main .block-container {
+    animation: fadeIn 0.4s ease-out;
+}
+
+/* Enhanced Step Transitions */
+[data-testid="stSidebar"] .step-active {
+    animation: pulseGlow 2s infinite;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-testid="stSidebar"] .step-completed {
+    animation: slideIn 0.4s ease-out;
+}
+
+/* Button Animations */
+.stButton > button {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stButton > button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(45, 127, 249, 0.15);
+}
+
+.stButton > button:active {
+    transform: translateY(0);
+}
+
+/* Input Field Animations */
+[data-testid="stTextInput"] input,
+[data-testid="stNumberInput"] input,
+[data-testid="stTextArea"] textarea {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-testid="stTextInput"] input:focus,
+[data-testid="stNumberInput"] input:focus,
+[data-testid="stTextArea"] textarea:focus {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(45, 127, 249, 0.1) !important;
+}
+
+/* Card Animations */
+.card-container {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-container:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Radio Button Animations */
+div[data-testid="stRadio"] label {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+div[data-testid="stRadio"] label:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(45, 127, 249, 0.1);
+}
+
+/* Alert Animations */
+div[data-testid="stAlert"] {
+    animation: scaleIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Message Preview Animations */
+.message-preview {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.message-preview:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Status Badge Animations */
+.status-badge {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.status-badge:hover {
+    transform: scale(1.05);
+}
+
+/* Smooth Page Transitions */
+.main {
+    transition: opacity 0.3s ease-out;
+}
+
+/* Loading Placeholder Animation */
+@keyframes shimmer {
+    0% { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
+}
+
+.loading-placeholder {
+    background: linear-gradient(90deg, 
+        #f0f0f0 25%, 
+        #f8f8f8 50%, 
+        #f0f0f0 75%
+    );
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite linear;
+    border-radius: var(--radius-md);
+}
+
+/* Improved Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--background-color);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    border-radius: 5px;
+    border: 2px solid var(--background-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-dark);
+}
+
+/* Prevent Content Jump During Loading */
+.stApp {
+    min-height: 100vh;
+}
+
+/* Loading Overlay */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    backdrop-filter: blur(5px);
+    animation: fadeInFixed 0.3s ease-out;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main {
+        padding: 1rem;
+    }
+    
+    .stButton > button {
+        width: 100%;
+    }
+}
+
+/* Grid Layout */
+.stColumns {
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Card Container */
+.card-container {
+    background-color: var(--surface-color);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 1.5rem;
+    animation: scaleIn 0.3s ease-out;
+}
+
+/* Dividers */
+hr {
+    border: none;
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 2rem 0;
+}
+
+/* Links */
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
 } 

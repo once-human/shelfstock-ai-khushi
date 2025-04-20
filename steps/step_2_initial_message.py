@@ -40,7 +40,7 @@ def render_initial_message():
         Generate a polite and professional message to a supplier to inquire about placing an order.
         
         **Supplier Details:**
-        - Name: Yahswi Ladda
+        - Name: Yashwi Ladda
         
         **Order Details:**
         - Product Name: {product_name}
@@ -66,9 +66,9 @@ def render_initial_message():
         Best regards,
         
         Khushi Banthia
-        cofounder  
-        VIA Rides  
-        khushi@viarides.in
+        owner
+        Banthia's Quick Store
+        khushibanthia19@gmail.com
         """
         message_history = [
             {"role": "system", "content": "You draft detailed, professional supplier inquiry messages that include comprehensive product specifications and business requirements. Always include the product name and quantity in the first paragraph."},

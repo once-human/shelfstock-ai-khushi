@@ -30,7 +30,7 @@ def load_css(file_name):
 
 # Set page config with custom theme
 st.set_page_config(
-    page_title="VIA Rides - Supplier Order Management",
+    page_title="Banthia's Quick Store - Supplier Order Management",
     page_icon="🏭",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -59,7 +59,7 @@ STEPS_CONFIG = getattr(configs, 'STEPS_CONFIG', DEFAULT_STEPS_CONFIG)
 with st.sidebar:
     st.markdown("""
         <div style='text-align: center; margin-bottom: 2rem;'>
-            <h1 style='color: var(--text-primary); font-size: 1.5rem; margin-bottom: 0.5rem;'>VIA Rides</h1>
+            <h1 style='color: var(--text-primary); font-size: 1.5rem; margin-bottom: 0.5rem;'>Banthia's Quick Store</h1>
             <p style='color: var(--text-secondary); font-size: 0.875rem;'>Supplier Order Management</p>
         </div>
     """, unsafe_allow_html=True)
@@ -118,6 +118,6 @@ st.markdown("""
 # Footer
 st.markdown("""
     <div style='text-align: center; margin-top: 2rem; padding: 1rem; color: var(--text-tertiary); font-size: 0.875rem;'>
-        © 2025 VIA Rides. All rights reserved.
+        © 2025 Banthia's Quick Store. All rights reserved.
     </div>
 """, unsafe_allow_html=True) 

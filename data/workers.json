@@ -2,24 +2,43 @@
     "workers": [
         {
             "id": "wrk_001",
-            "name": "John Smith",
-            "role": "Sales Representative",
+            "name": "Soham Thatte",
+            "role": "Procurement Specialist",
             "availability": true,
-            "current_tasks": 2
+            "current_tasks": 2,
+            "expertise": ["Grains", "Spices", "Vendor Negotiation"]
         },
         {
             "id": "wrk_002",
-            "name": "Sarah Johnson",
-            "role": "Account Manager",
+            "name": "Priya Sharma",
+            "role": "Inventory Manager",
             "availability": true,
-            "current_tasks": 1
+            "current_tasks": 1,
+            "expertise": ["Dairy Products", "Stock Management", "Quality Control"]
         },
         {
             "id": "wrk_003",
-            "name": "Michael Chen",
-            "role": "Sales Representative",
+            "name": "Amit Deshpande",
+            "role": "Logistics Coordinator",
+            "availability": true,
+            "current_tasks": 3,
+            "expertise": ["Delivery Scheduling", "Route Optimization", "Cold Chain"]
+        },
+        {
+            "id": "wrk_004",
+            "name": "Anjali Rao",
+            "role": "Procurement Assistant",
             "availability": false,
-            "current_tasks": 5
+            "current_tasks": 5,
+            "expertise": ["Packaged Goods", "Order Tracking", "Supplier Communication"]
+        },
+        {
+            "id": "wrk_005",
+            "name": "Vikram Singh",
+            "role": "Category Manager (Snacks & Beverages)",
+            "availability": true,
+            "current_tasks": 2,
+            "expertise": ["Snacks", "Beverages", "Market Trends"]
         }
     ]
 } 
