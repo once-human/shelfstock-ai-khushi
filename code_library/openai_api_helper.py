@@ -6,6 +6,8 @@ import openai
 import streamlit as st
 from pydantic import BaseModel
 from typing import List, Dict, Optional, Type, Union
+import requests
+import json
 
 """
 openai_api_helper.py
@@ -25,35 +27,61 @@ This file makes all those steps easy.
 
 # ---------- OpenAI Client ----------
 
-def get_openai_client():
-    """Get OpenAI client with API key from secrets or environment variables."""
+def get_ai_client():
+    """Get AI client (OpenAI or Groq) with API key from secrets or environment variables."""
     try:
-        # Try secrets first
-        api_key = st.secrets.get("OPENAI_API_KEY", None)
+        # Try OpenAI first
+        openai_key = st.secrets.get("OPENAI_API_KEY", os.getenv("OPENAI_API_KEY", None))
+        if openai_key and openai_key.startswith("sk-") and len(openai_key) > 50:
+            client = openai.OpenAI(api_key=openai_key)
+            print(f"[get_ai_client] Using OpenAI")
+            return client, "openai"
         
-        # If not in secrets, try environment variable
-        if not api_key:
-            api_key = os.getenv("OPENAI_API_KEY", None)
+        # Try Groq as fallback
+        groq_key = st.secrets.get("GROQ_API_KEY", os.getenv("GROQ_API_KEY", None))
+        if groq_key and groq_key.startswith("gsk_") and len(groq_key) > 50:
+            print(f"[get_ai_client] Using Groq")
+            return groq_key, "groq"
         
-        # If still not found, show error and return None
-        if not api_key:
-            st.error("⚠️ OpenAI API key not found! Please add OPENAI_API_KEY to your Streamlit secrets or environment variables.")
-            st.info("Go to: https://platform.openai.com/account/api-keys to get a new API key")
-            return None
-        
-        # Validate API key format
-        if not api_key.startswith("sk-") or len(api_key) < 50:
-            st.error(f"⚠️ Invalid API key format. Expected key starting with 'sk-' and at least 50 characters, got: {api_key[:20]}...")
-            return None
-        
-        # Create client
-        client = openai.OpenAI(api_key=api_key)
-        print(f"[get_openai_client] OpenAI client created successfully")
-        return client
+        # No valid API keys found
+        st.error("⚠️ No valid AI API key found!")
+        st.info("Add either OPENAI_API_KEY or GROQ_API_KEY to your Streamlit secrets")
+        st.info("• OpenAI: https://platform.openai.com/account/api-keys")
+        st.info("• Groq (Free): https://console.groq.com/keys")
+        return None, None
         
     except Exception as e:
-        st.error(f"Error getting OpenAI client: {e}")
-        return None
+        st.error(f"Error getting AI client: {e}")
+        return None, None
+
+def call_groq_api(messages, model="llama-3.1-8b-instant", max_tokens=1000):
+    """Call Groq API directly."""
+    try:
+        groq_key = st.secrets.get("GROQ_API_KEY", os.getenv("GROQ_API_KEY", None))
+        if not groq_key:
+            return "Groq API key not found"
+        
+        url = "https://api.groq.com/openai/v1/chat/completions"
+        headers = {
+            "Authorization": f"Bearer {groq_key}",
+            "Content-Type": "application/json"
+        }
+        
+        data = {
+            "model": model,
+            "messages": messages,
+            "max_tokens": max_tokens,
+            "temperature": 0.7
+        }
+        
+        response = requests.post(url, headers=headers, json=data)
+        response.raise_for_status()
+        
+        result = response.json()
+        return result["choices"][0]["message"]["content"]
+        
+    except Exception as e:
+        return f"Groq API error: {e}"
 
 # ---------- TEXT-TO-TEXT COMPLETION ----------
 
@@ -77,43 +105,59 @@ def generate_completion(
     """
     print(f"[generate_completion] Generating completion with {len(message_history)} messages")
     
-    client = get_openai_client()
+    client, api_type = get_ai_client()
     if not client:
         # Return mock response for testing
-        mock_response = "🤖 **Mock AI Response** (API key not configured)\n\nThis is a placeholder response. To enable real AI features, please add a valid OpenAI API key to your Streamlit secrets."
-        st.warning("Using mock AI response - add a valid OpenAI API key for real AI features")
+        mock_response = "🤖 **Mock AI Response** (API key not configured)\n\nThis is a placeholder response. To enable real AI features, please add a valid API key to your Streamlit secrets.\n\n**Free options:**\n• Groq: https://console.groq.com/keys\n• OpenAI: https://platform.openai.com/account/api-keys"
+        st.warning("Using mock AI response - add a valid API key for real AI features")
         return mock_response
     
     try:
-        if response_model:
-            # Use structured output
-            response = client.chat.completions.create(
-                model=st.secrets.get("LLM_MODEL", "gpt-3.5-turbo"),
-                messages=message_history,
-                temperature=temperature,
-                max_tokens=max_tokens,
-                response_format={"type": "json_object"}
-            )
+        if api_type == "openai":
+            # Use OpenAI
+            if response_model:
+                # Use structured output
+                response = client.chat.completions.create(
+                    model=st.secrets.get("LLM_MODEL", "gpt-3.5-turbo"),
+                    messages=message_history,
+                    temperature=temperature,
+                    max_tokens=max_tokens,
+                    response_format={"type": "json_object"}
+                )
+                
+                # Parse JSON response into Pydantic model
+                content = response.choices[0].message.content
+                json_data = json.loads(content)
+                return response_model(**json_data)
+            else:
+                # Regular text completion
+                response = client.chat.completions.create(
+                    model=st.secrets.get("LLM_MODEL", "gpt-3.5-turbo"),
+                    messages=message_history,
+                    temperature=temperature,
+                    max_tokens=max_tokens
+                )
+                
+                return response.choices[0].message.content
+                
+        elif api_type == "groq":
+            # Use Groq
+            model = st.secrets.get("GROQ_MODEL", "llama-3.1-8b-instant")
+            response = call_groq_api(message_history, model, max_tokens)
             
-            # Parse JSON response into Pydantic model
-            import json
-            content = response.choices[0].message.content
-            json_data = json.loads(content)
-            return response_model(**json_data)
-        else:
-            # Regular text completion
-            response = client.chat.completions.create(
-                model=st.secrets.get("LLM_MODEL", "gpt-3.5-turbo"),
-                messages=message_history,
-                temperature=temperature,
-                max_tokens=max_tokens
-            )
+            if response_model and response.startswith("{"):
+                # Try to parse as JSON for structured output
+                try:
+                    json_data = json.loads(response)
+                    return response_model(**json_data)
+                except:
+                    pass  # Fall through to return raw response
             
-            return response.choices[0].message.content
+            return response
             
     except Exception as e:
         print(f"[generate_completion] Error: {e}")
-        st.error(f"OpenAI API Error: {e}")
+        st.error(f"AI API Error: {e}")
         return f"Sorry, I encountered an error generating a response: {e}"
 
 # ---------- AUDIO TRANSCRIPTION ----------
