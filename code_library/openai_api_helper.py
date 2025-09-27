@@ -74,15 +74,23 @@ def call_groq_api(messages, model="llama-3.1-8b-instant", max_tokens=1000):
             "model": model,
             "messages": messages,
             "max_tokens": max_tokens,
-            "temperature": 0.7
+            "temperature": 0.7,
+            "top_p": 1.0,
+            "stream": False
         }
         
-        response = requests.post(url, headers=headers, json=data)
-        response.raise_for_status()
+        response = requests.post(url, headers=headers, json=data, timeout=30)
+        
+        if response.status_code != 200:
+            return f"Groq API error: {response.status_code} - {response.text}"
         
         result = response.json()
         return result["choices"][0]["message"]["content"]
         
+    except requests.exceptions.Timeout:
+        return "Groq API timeout - please try again"
+    except requests.exceptions.RequestException as e:
+        return f"Groq API connection error: {e}"
     except Exception as e:
         return f"Groq API error: {e}"
 
