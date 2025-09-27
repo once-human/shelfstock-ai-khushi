@@ -1,19 +1,15 @@
 import streamlit as st
 import smtplib
 from email.mime.text import MIMEText
-import sys
 import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-import configs
 
-# --- Email Configuration (Fetch from configs or secrets) ---
+# --- Email Configuration (Fetch from secrets or environment variables) ---
 # IMPORTANT: Use st.secrets or environment variables in a real app!
-# Example using placeholders from configs.py (replace with your actual source)
-SMTP_SERVER = getattr(configs, "SMTP_SERVER", None)
-SMTP_PORT = getattr(configs, "SMTP_PORT", 587) # Default TLS port
-SMTP_USERNAME = getattr(configs, "SMTP_USERNAME", None)
-SMTP_PASSWORD = getattr(configs, "SMTP_PASSWORD", None) # Use App Password if 2FA enabled
-SENDER_EMAIL = getattr(configs, "SENDER_EMAIL", None)
+SMTP_SERVER = st.secrets.get("SMTP_SERVER", os.getenv("SMTP_SERVER", None))
+SMTP_PORT = st.secrets.get("SMTP_PORT", os.getenv("SMTP_PORT", 587)) # Default TLS port
+SMTP_USERNAME = st.secrets.get("SMTP_USERNAME", os.getenv("SMTP_USERNAME", None))
+SMTP_PASSWORD = st.secrets.get("SMTP_PASSWORD", os.getenv("SMTP_PASSWORD", None)) # Use App Password if 2FA enabled
+SENDER_EMAIL = st.secrets.get("SENDER_EMAIL", os.getenv("SENDER_EMAIL", None))
 
 def send_email(recipient_email: str, subject: str, body: str) -> bool:
     """Sends an email using SMTP configuration."""

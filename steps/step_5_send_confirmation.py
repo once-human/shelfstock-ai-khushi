@@ -2,10 +2,7 @@ import streamlit as st
 from utils.data_handler import get_supplier_by_id, get_worker_by_id
 from code_library.openai_api_helper import generate_completion
 # from utils.email_handler import send_email # No longer sending real email
-import sys
-import os
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-import configs
+# Configuration handled via st.secrets
 import time
 
 def render_send_confirmation():

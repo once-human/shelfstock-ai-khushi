@@ -10,7 +10,7 @@ from steps.step_6_complete import render_complete
 from utils.state_management import init_session_state
 from utils.db_init import init_database # Import DB initializer
 from pathlib import Path
-import configs # Import configs
+# Configuration is now handled via st.secrets
 
 # Initialize Database (Run once if DB doesn't exist)
 # Wrap in try-except to prevent app crash if DB is locked or permissions issue
@@ -61,7 +61,7 @@ DEFAULT_STEPS_CONFIG = {
     5: {"name": "Send Confirmation", "icon": "📨"},
     6: {"name": "Order Complete", "icon": "✔️"}
 }
-STEPS_CONFIG = getattr(configs, 'STEPS_CONFIG', DEFAULT_STEPS_CONFIG)
+STEPS_CONFIG = DEFAULT_STEPS_CONFIG
 
 with st.sidebar:
     # Sidebar Header (Logo Placeholder + Title)
