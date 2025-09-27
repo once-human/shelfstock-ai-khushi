@@ -1,6 +1,9 @@
 import streamlit as st
 import smtplib
 from email.mime.text import MIMEText
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import configs
 
 # --- Email Configuration (Fetch from configs or secrets) ---
