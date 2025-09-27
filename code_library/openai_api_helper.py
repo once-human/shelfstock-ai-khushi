@@ -28,25 +28,29 @@ This file makes all those steps easy.
 def get_openai_client():
     """Get OpenAI client with API key from secrets or environment variables."""
     try:
-        api_key = st.secrets.get("OPENAI_API_KEY", os.getenv("OPENAI_API_KEY", "your-openai-api-key-here"))
-        if api_key == "your-openai-api-key-here":
-            st.error("⚠️ OpenAI API key not found! Please add OPENAI_API_KEY to your Streamlit secrets.")
-            st.info("Current secrets available: " + str(list(st.secrets.keys()) if hasattr(st, 'secrets') else "No secrets"))
+        # Try secrets first
+        api_key = st.secrets.get("OPENAI_API_KEY", None)
+        
+        # If not in secrets, try environment variable
+        if not api_key:
+            api_key = os.getenv("OPENAI_API_KEY", None)
+        
+        # If still not found, show error and return None
+        if not api_key:
+            st.error("⚠️ OpenAI API key not found! Please add OPENAI_API_KEY to your Streamlit secrets or environment variables.")
+            st.info("Go to: https://platform.openai.com/account/api-keys to get a new API key")
             return None
         
-        # Test the API key by creating a client
+        # Validate API key format
+        if not api_key.startswith("sk-") or len(api_key) < 50:
+            st.error(f"⚠️ Invalid API key format. Expected key starting with 'sk-' and at least 50 characters, got: {api_key[:20]}...")
+            return None
+        
+        # Create client
         client = openai.OpenAI(api_key=api_key)
-        
-        # Test the client with a simple request
-        try:
-            # This is a minimal test to verify the API key works
-            test_response = client.models.list()
-            print(f"[get_openai_client] API key validated successfully")
-        except Exception as test_error:
-            st.error(f"API key validation failed: {test_error}")
-            return None
-            
+        print(f"[get_openai_client] OpenAI client created successfully")
         return client
+        
     except Exception as e:
         st.error(f"Error getting OpenAI client: {e}")
         return None
@@ -75,13 +79,16 @@ def generate_completion(
     
     client = get_openai_client()
     if not client:
-        return "OpenAI client not available. Please check your API key configuration."
+        # Return mock response for testing
+        mock_response = "🤖 **Mock AI Response** (API key not configured)\n\nThis is a placeholder response. To enable real AI features, please add a valid OpenAI API key to your Streamlit secrets."
+        st.warning("Using mock AI response - add a valid OpenAI API key for real AI features")
+        return mock_response
     
     try:
         if response_model:
             # Use structured output
             response = client.chat.completions.create(
-                model=st.secrets.get("LLM_MODEL", "gpt-4o"),
+                model=st.secrets.get("LLM_MODEL", "gpt-3.5-turbo"),
                 messages=message_history,
                 temperature=temperature,
                 max_tokens=max_tokens,
@@ -96,7 +103,7 @@ def generate_completion(
         else:
             # Regular text completion
             response = client.chat.completions.create(
-                model=st.secrets.get("LLM_MODEL", "gpt-4o"),
+                model=st.secrets.get("LLM_MODEL", "gpt-3.5-turbo"),
                 messages=message_history,
                 temperature=temperature,
                 max_tokens=max_tokens
