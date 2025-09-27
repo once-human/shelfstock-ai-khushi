@@ -28,25 +28,28 @@ This file makes all those steps easy.
 # ---------- OpenAI Client ----------
 
 def get_ai_client():
-    """Get AI client (OpenAI or Groq) with API key from secrets or environment variables."""
+    """Get AI client (Groq preferred, then OpenAI) with API key from secrets or environment variables."""
     try:
-        # Try OpenAI first
-        openai_key = st.secrets.get("OPENAI_API_KEY", os.getenv("OPENAI_API_KEY", None))
-        if openai_key and openai_key.startswith("sk-") and len(openai_key) > 50:
-            client = openai.OpenAI(api_key=openai_key)
-            print(f"[get_ai_client] Using OpenAI")
-            return client, "openai"
-        
-        # Try Groq as fallback
+        # Try Groq first (preferred - free and fast)
         groq_key = st.secrets.get("GROQ_API_KEY", os.getenv("GROQ_API_KEY", None))
         if groq_key and groq_key.startswith("gsk_") and len(groq_key) > 50:
             print(f"[get_ai_client] Using Groq")
             return groq_key, "groq"
         
+        # Try OpenAI as fallback
+        openai_key = st.secrets.get("OPENAI_API_KEY", os.getenv("OPENAI_API_KEY", None))
+        if openai_key and openai_key.startswith("sk-") and len(openai_key) > 50:
+            # Validate the key is not the old corrupted one
+            if "****************************************************************" not in openai_key:
+                client = openai.OpenAI(api_key=openai_key)
+                print(f"[get_ai_client] Using OpenAI")
+                return client, "openai"
+            else:
+                print(f"[get_ai_client] Skipping corrupted OpenAI key")
+        
         # No valid API keys found
         st.error("⚠️ No valid AI API key found!")
-        st.info("Add either OPENAI_API_KEY or GROQ_API_KEY to your Streamlit secrets")
-        st.info("• OpenAI: https://platform.openai.com/account/api-keys")
+        st.info("Add GROQ_API_KEY to your Streamlit secrets for free AI:")
         st.info("• Groq (Free): https://console.groq.com/keys")
         return None, None
         
