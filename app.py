@@ -49,36 +49,6 @@ load_css("style.css")
 # Initialize session state (after page config)
 init_session_state()
 
-# Debug: Check secrets configuration
-if st.sidebar.button("🔍 Debug Secrets"):
-    st.sidebar.write("**Secrets Debug Info:**")
-    try:
-        if hasattr(st, 'secrets'):
-            st.sidebar.write(f"Secrets available: {list(st.secrets.keys())}")
-            if 'OPENAI_API_KEY' in st.secrets:
-                api_key = st.secrets['OPENAI_API_KEY']
-                st.sidebar.write(f"API Key length: {len(api_key)}")
-                st.sidebar.write(f"API Key starts with: {api_key[:10]}...")
-            else:
-                st.sidebar.error("OPENAI_API_KEY not found in secrets")
-        else:
-            st.sidebar.error("No secrets available")
-    except Exception as e:
-        st.sidebar.error(f"Error checking secrets: {e}")
-
-# Debug: Test AI functionality
-if st.sidebar.button("🤖 Test AI"):
-    try:
-        from code_library.openai_api_helper import generate_completion
-        test_messages = [
-            {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": "Say 'AI is working!' if you can read this."}
-        ]
-        result = generate_completion(test_messages)
-        st.sidebar.success(f"AI Test Result: {result}")
-    except Exception as e:
-        st.sidebar.error(f"AI Test Failed: {e}")
-
 # --- Sidebar Rendering --- 
 # Define step names and icons 
 # Try loading from configs.py, fallback to default
