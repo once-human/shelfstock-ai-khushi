@@ -25,9 +25,18 @@ This file makes all those steps easy.
 
 # ---------- OpenAI Client ----------
 
-# Get API key from Streamlit secrets or environment variables
-api_key = st.secrets.get("OPENAI_API_KEY", os.getenv("OPENAI_API_KEY", "your-openai-api-key-here"))
-client = openai.OpenAI(api_key=api_key)
+def get_openai_client():
+    """Get OpenAI client with API key from secrets or environment variables."""
+    try:
+        api_key = st.secrets.get("OPENAI_API_KEY", os.getenv("OPENAI_API_KEY", "your-openai-api-key-here"))
+        if api_key == "your-openai-api-key-here":
+            st.error("⚠️ OpenAI API key not found! Please add OPENAI_API_KEY to your Streamlit secrets.")
+            st.info("Current secrets available: " + str(list(st.secrets.keys()) if hasattr(st, 'secrets') else "No secrets"))
+            return None
+        return openai.OpenAI(api_key=api_key)
+    except Exception as e:
+        st.error(f"Error getting OpenAI client: {e}")
+        return None
 
 # ---------- TEXT-TO-TEXT COMPLETION ----------
 
@@ -50,6 +59,10 @@ def generate_completion(
         String response or Pydantic model instance
     """
     print(f"[generate_completion] Generating completion with {len(message_history)} messages")
+    
+    client = get_openai_client()
+    if not client:
+        return "OpenAI client not available. Please check your API key configuration."
     
     try:
         if response_model:
@@ -96,6 +109,10 @@ def transcribe_audio(audio_file_path: str) -> str:
     """
     print(f"[transcribe_audio] Started transcribing: {audio_file_path}")
 
+    client = get_openai_client()
+    if not client:
+        return "OpenAI client not available. Please check your API key configuration."
+
     with open(audio_file_path, "rb") as audio_file:
         transcription_response = client.audio.transcriptions.create(
             model=st.secrets.get("TRANSCRIPTION_MODEL", "whisper-1"),
@@ -127,6 +144,10 @@ def synthesize_speech(
         Path to the generated audio file
     """
     print(f"[synthesize_speech] Converting text to speech: {text[:50]}...")
+    
+    client = get_openai_client()
+    if not client:
+        return "OpenAI client not available. Please check your API key configuration."
     
     # Ensure output directory exists
     os.makedirs(output_dir, exist_ok=True)
