@@ -33,7 +33,20 @@ def get_openai_client():
             st.error("⚠️ OpenAI API key not found! Please add OPENAI_API_KEY to your Streamlit secrets.")
             st.info("Current secrets available: " + str(list(st.secrets.keys()) if hasattr(st, 'secrets') else "No secrets"))
             return None
-        return openai.OpenAI(api_key=api_key)
+        
+        # Test the API key by creating a client
+        client = openai.OpenAI(api_key=api_key)
+        
+        # Test the client with a simple request
+        try:
+            # This is a minimal test to verify the API key works
+            test_response = client.models.list()
+            print(f"[get_openai_client] API key validated successfully")
+        except Exception as test_error:
+            st.error(f"API key validation failed: {test_error}")
+            return None
+            
+        return client
     except Exception as e:
         st.error(f"Error getting OpenAI client: {e}")
         return None
@@ -93,7 +106,8 @@ def generate_completion(
             
     except Exception as e:
         print(f"[generate_completion] Error: {e}")
-        return "Sorry, I encountered an error generating a response."
+        st.error(f"OpenAI API Error: {e}")
+        return f"Sorry, I encountered an error generating a response: {e}"
 
 # ---------- AUDIO TRANSCRIPTION ----------
 
